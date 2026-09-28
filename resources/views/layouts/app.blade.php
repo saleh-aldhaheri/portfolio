@@ -11,8 +11,13 @@
 
         @livewireStyles
     </head>
-    <body>
-        {{ $slot }}
-        @livewireScripts
+    <body class="bg-base flex justify-center">
+
+       <div class="container">
+            {{ $slot }}
+            @livewireScripts
+           <div class="my-4 border-b border-muted/40 w-full"></div>
+            <x-footer />
+       </div>
     </body>
 </html>
