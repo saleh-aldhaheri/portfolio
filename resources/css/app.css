@@ -1,0 +1,50 @@
+@import 'tailwindcss';
+
+@source '../views';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+
+:root {
+    --brand-bg-base: #F5F0EB;
+    --brand-bg-surface: #EBE5DD;
+    --brand-text-main: #282828;
+    --brand-text-muted: #666666;
+    --brand-primary: #B43C3C;
+    --brand-success: #3C7850;
+    --brand-warning: #AA641E;
+    --brand-info: #325A96;
+}
+
+.dark {
+    --brand-bg-base: #010409;
+    --brand-bg-surface: #161B22;
+    --brand-text-main: #DCE1E6;
+    --brand-text-muted: #8B949E;
+    --brand-primary: #4682F0;
+    --brand-success: #50D26E;
+    --brand-warning: #DC9632;
+    --brand-info: #32BEC8;
+}
+
+
+.dracula {
+    --brand-bg-base: #282A36;
+    --brand-bg-surface: #44475A;
+    --brand-text-main: #F8F8F2;
+    --brand-text-muted: #6272A4;
+    --brand-primary: #BD93F9;
+    --brand-success: #50FA7B;
+    --brand-warning: #F1FA8C;
+    --brand-info: #8BE9FD;
+}
+
+@theme inline {
+    --color-base: var(--brand-bg-base);
+    --color-surface: var(--brand-bg-surface);
+    --color-main: var(--brand-text-main);
+    --color-muted: var(--brand-text-muted);
+    --color-primary: var(--brand-primary);
+    --color-success: var(--brand-success);
+    --color-warning: var(--brand-warning);
+    --color-info: var(--brand-info);
+    --font-mono: 'JetBrains Mono', 'Fira Code', Courier, monospace;
+}
