@@ -12,12 +12,28 @@
         @livewireStyles
     </head>
     <body class="bg-base flex justify-center">
-
        <div class="container">
-            {{ $slot }}
+           <x-header />
+
+           {{ $slot }}
             @livewireScripts
+
            <div class="my-4 border-b border-muted/40 w-full"></div>
-            <x-footer />
+           <x-footer />
        </div>
+       <script>
+           document.addEventListener('alpine:init', () => {
+               Alpine.store('audio', {
+                   click() {
+                       const clickSound = new Audio("{{ asset('audio/enter_key.mp3') }}");
+                       clickSound.volume = 0.3;
+                       clickSound.currentTime = 0;
+                       clickSound.play().catch(error => {
+                           console.error("Audio playback error:", error);
+                       });
+                   }
+               });
+           });
+       </script>
     </body>
 </html>
