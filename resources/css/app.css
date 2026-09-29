@@ -4,6 +4,18 @@
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 
 :root {
+
+    --brand-bg-base: #010409;
+    --brand-bg-surface: #161B22;
+    --brand-text-main: #a6a6a7;
+    --brand-text-muted: #8B949E;
+    --brand-primary: #429a51;
+    --brand-success: #50D26E;
+    --brand-warning: #DC9632;
+    --brand-info: #32BEC8;
+}
+
+.light {
     --brand-bg-base: #F5F0EB;
     --brand-bg-surface: #EBE5DD;
     --brand-text-main: #282828;
@@ -12,17 +24,6 @@
     --brand-success: #3C7850;
     --brand-warning: #AA641E;
     --brand-info: #325A96;
-}
-
-.dark {
-    --brand-bg-base: #010409;
-    --brand-bg-surface: #161B22;
-    --brand-text-main: #DCE1E6;
-    --brand-text-muted: #8B949E;
-    --brand-primary: #50D26E;
-    --brand-success: #50D26E;
-    --brand-warning: #DC9632;
-    --brand-info: #32BEC8;
 }
 
 
@@ -37,6 +38,16 @@
     --brand-info: #8BE9FD;
 }
 
+@keyframes terminal-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
 @theme inline {
     --color-base: var(--brand-bg-base);
     --color-surface: var(--brand-bg-surface);
@@ -47,4 +58,6 @@
     --color-warning: var(--brand-warning);
     --color-info: var(--brand-info);
     --font-mono: 'JetBrains Mono', 'Fira Code', Courier, monospace;
+    --animate-terminal-typing: typing 2.5s steps(30, end) forwards;
+    --animate-terminal-blink: terminal-blink 0.8s step-end infinite;
 }

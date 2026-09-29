@@ -1,9 +1,30 @@
-<footer class="text-center text-muted px-2">
-    <blockquote class="pt-8 pb-4 text-center">
-        <p class="text-xs italic leading-relaxed text-muted">
+<footer class="text-center text-muted px-2 font-mono">
+    <blockquote class="pt-8 pb-4 flex flex-col items-center">
+
+        <x-terminal-typing
+            as="p"
+            duration="3s"
+            steps="80"
+            :cursor="false"
+            class="px-2 text-xs italic leading-relaxed text-muted"
+        >
             “and whoever is patient, allah will make him patient. and no one has ever been given a gift better and more encompassing than patience.”
-        </p>
-        <div class="mt-2 text-sm text-main/70 not-italic">— prophet muhammad (sahih al-bukhari)</div>
+        </x-terminal-typing>
+
+        <x-terminal-typing
+            as="div"
+            duration="2s"
+            delay="3.2s"
+            steps="40"
+            :cursor="false"
+            class="mt-2 text-xs text-main/70 not-italic"
+        >
+            — prophet muhammad (sahih al-bukhari)
+        </x-terminal-typing>
+
     </blockquote>
-    <p class="text-muted text-xs italic">© 2026 Saleh Al-Dhaheri. Type <span class="text-primary">"help"</span> for commands.</p>
+
+    <p class="text-muted text-xs italic">
+        © {{ now()->year }} Saleh Al-Dhaheri. Type <span class="text-primary">"help"</span> for commands.
+    </p>
 </footer>
