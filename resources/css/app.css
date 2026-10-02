@@ -4,15 +4,16 @@
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 
 :root {
-
-    --brand-bg-base: #010409;
+    --brand-bg-base: #000000;
     --brand-bg-surface: #161B22;
     --brand-text-main: #a6a6a7;
     --brand-text-muted: #8B949E;
-    --brand-primary: #429a51;
+    --brand-primary: #22c55e;
+    --brand-secondary: #3b82f6;
     --brand-success: #50D26E;
     --brand-warning: #DC9632;
     --brand-info: #32BEC8;
+    --brand-error: #F85149;
 }
 
 .light {
@@ -21,11 +22,12 @@
     --brand-text-main: #282828;
     --brand-text-muted: #666666;
     --brand-primary: #B43C3C;
+    --brand-secondary: #3b82f6;
     --brand-success: #3C7850;
     --brand-warning: #AA641E;
     --brand-info: #325A96;
+    --brand-error: #C62828;
 }
-
 
 .dracula {
     --brand-bg-base: #282A36;
@@ -33,9 +35,11 @@
     --brand-text-main: #F8F8F2;
     --brand-text-muted: #6272A4;
     --brand-primary: #BD93F9;
+    --brand-secondary: #3b82f6;
     --brand-success: #50FA7B;
     --brand-warning: #F1FA8C;
     --brand-info: #8BE9FD;
+    --brand-error: #FF5555;
 }
 
 @keyframes terminal-blink {
@@ -54,10 +58,12 @@
     --color-main: var(--brand-text-main);
     --color-muted: var(--brand-text-muted);
     --color-primary: var(--brand-primary);
+    --color-secondary: var(--brand-secondary);
     --color-success: var(--brand-success);
     --color-warning: var(--brand-warning);
     --color-info: var(--brand-info);
-    --font-mono: 'JetBrains Mono', 'Fira Code', Courier, monospace;
+    --color-error: var(--brand-error);
+    --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Liberation Mono", Menlo, monospace;
     --animate-terminal-typing: typing 2.5s steps(30, end) forwards;
     --animate-terminal-blink: terminal-blink 0.8s step-end infinite;
 }
