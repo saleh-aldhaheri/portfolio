@@ -1,2 +1,3 @@
-<div class="bg-base h-20 w-20 rounded-full">
+<div class="py-3">
+  <livewire:components.user-terminal />
 </div>

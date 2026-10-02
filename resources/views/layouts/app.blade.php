@@ -11,22 +11,22 @@
 
         @livewireStyles
     </head>
-    <body class="bg-base flex justify-center">
-       <div class="container">
-           <x-header />
-
+    <body class="bg-base text-main min-h-screen flex flex-col">
+        <x-header />
+        <div class="container flex-1 mx-auto">
            {{ $slot }}
             @livewireScripts
-
-           <div class="my-4 border-b border-muted/40 w-full"></div>
-           <x-footer />
-       </div>
-       <script>
+        </div>
+        <x-footer/>
+        <script>
            document.addEventListener('alpine:init', () => {
                Alpine.store('audio', {
                    click() {
-                       const clickSound = new Audio("{{ asset('audio/enter_key.mp3') }}");
-                       clickSound.volume = 0.3;
+                       let  clickSound = new Audio("{{ asset('audio/enter_key.mp3') }}");
+                       if(event.key !== 'enter'){
+                           clickSound = new Audio("{{ asset('audio/press_key.mp3') }}");
+                       }
+                       clickSound.volume = 0.1;
                        clickSound.currentTime = 0;
                        clickSound.play().catch(error => {
                            console.error("Audio playback error:", error);
@@ -34,6 +34,6 @@
                    }
                });
            });
-       </script>
+        </script>
     </body>
 </html>
