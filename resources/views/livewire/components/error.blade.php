@@ -25,9 +25,6 @@
         <div class="break_words">
             <pre>   • banner    - To display the banner</pre>
         </div>
-        <div style="color: var(--theme-outputText);">
-            <pre>   • clear     - Clear everything</pre>
-        </div>
     </div>
     </p>
 </div>

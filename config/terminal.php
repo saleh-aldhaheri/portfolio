@@ -12,4 +12,18 @@ return [
             'command',
         ],
     ],
+
+    'help' => [
+        'component' => 'components.help',
+        'props' => [
+            'command',
+        ],
+    ],
+
+    'about' => [
+        'component' => 'components.about',
+        'props' => [
+            'command',
+        ],
+    ],
 ];
