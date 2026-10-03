@@ -7,29 +7,24 @@ use Livewire\Component;
 
 class UserTerminal extends Component
 {
-    public string $command = 'banner';
-
-    public array $components = [];
+    public ?string $command = null;
 
     public array $history = [];
 
-    public int $componentId = 0;
-
     public ?int $historyIndex = null;
 
-    public function mount(): void
-    {
-        $this->setComponent();
-    }
+    public bool $showBanner = true;
 
     public function render(): View
     {
-        return view('livewire.components.user-terminal');
+        $component = $this->resolveDisplayComponent();
+
+        return view('livewire.components.user-terminal', compact('component'));
     }
 
-    public function setComponent(): void
+    public function runCommand(): void
     {
-        $command = $this->command;
+        $command = strtolower(trim($this->command ?? ''));
         $this->command = '';
         $this->historyIndex = null;
 
@@ -37,33 +32,15 @@ class UserTerminal extends Component
             return;
         }
 
-        if ($command === 'clear') {
-            $this->components = [];
-            $this->history = array_values(array_diff($this->history, [$command]));
-            $this->history[] = $command;
+        if ($command === 'banner') {
+            $this->showBanner = true;
 
             return;
         }
 
-        $resolved = resolveComponents($command);
-
-        if (empty($resolved)) {
-            $resolved = resolveComponents('error', ['command' => $command]);
-        }
-
-        if ($command !== 'banner') {
-            $this->history = array_values(array_diff($this->history, [$command]));
-            $this->history[] = $command;
-        }
-
-        $resolved['command'] = $command;
-        $resolved['key'] = 'component-'.++$this->componentId;
-
-        if (! empty($this->components) && $this->components[count($this->components) - 1]['command'] === 'banner') {
-            $this->components[count($this->components) - 1] = $resolved;
-        } else {
-            array_unshift($this->components, $resolved);
-        }
+        $this->showBanner = false;
+        $this->history = array_values(array_diff($this->history, [$command]));
+        $this->history[] = $command;
     }
 
     public function historyUp(): void
@@ -92,5 +69,22 @@ class UserTerminal extends Component
             $this->historyIndex = null;
             $this->command = '';
         }
+    }
+
+    private function resolveDisplayComponent(): array
+    {
+        $history = $this->history;
+        $command = ($this->showBanner || empty($history)) ? 'banner' : end($history);
+
+        $resolved = resolveComponents($command);
+
+        if (empty($resolved)) {
+            $resolved = resolveComponents('error', ['command' => $command]);
+        }
+
+        $resolved['command'] = $command;
+        $resolved['key'] = 'component-'.$command;
+
+        return $resolved;
     }
 }
