@@ -1,6 +1,6 @@
 <div class="px-4">
     <header class="mb-6 text-center">
-        <h2 class="mb-2 text-xl font-bold text-info"><span class="text-primary">$</span>./ Contact</h2>
+        <h2 class="mb-2 text-xl font-bold text-info"><span class="text-primary">$</span>./Contact</h2>
         <p class="text-sm text-warning">- leave me a message -</p>
     </header>
 

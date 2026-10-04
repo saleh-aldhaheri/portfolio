@@ -12,7 +12,7 @@ class Error extends Component
 
     public function render(): View
     {
-        return view('livewire.components.error',[
+        return view('livewire.components.error', [
             'data' => DataResolverService::resolve('help'),
         ]);
     }

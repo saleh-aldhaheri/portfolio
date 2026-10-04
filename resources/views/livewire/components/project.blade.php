@@ -1,6 +1,6 @@
 <div class="px-2 text-sm text-muted">
     <header class="mb-6 text-center">
-        <h2 class="mb-2 text-xl font-bold text-info"><span class="text-primary">$</span> ls projects/</h2>
+        <h2 class="mb-2 text-xl font-bold text-info"><span class="text-primary">$</span>./Projects</h2>
         <p class="text-xs text-warning">- most recent works -</p>
     </header>
 

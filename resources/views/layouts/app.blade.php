@@ -29,7 +29,7 @@
     <body class="bg-base text-main min-h-screen flex flex-col">
 
         <x-header />
-        <main class="container flex-1 mx-auto px-4 py-6">
+        <main class="container flex-1 mx-auto px-4 py-6 flex">
             <canvas id="spaceCanvas" class="fixed inset-0 w-full h-full pointer-events-none z-[-1]"></canvas>
             {{ $slot }}
         </main>
@@ -38,23 +38,40 @@
         @livewireScripts
         <script>
            document.addEventListener('alpine:init', () => {
+
+           });
+
+           //AI Generated
+           document.addEventListener('alpine:init', (e) => {
                Alpine.store('audio', {
                    click() {
+
                        let  clickSound = new Audio("{{ asset('audio/enter_key.mp3') }}");
-                       if(event.key !== 'enter'){
+                       clickSound.volume = 0.6;
+
+                       if (event.key.toLowerCase() !== 'enter') {
                            clickSound = new Audio("{{ asset('audio/press_key.mp3') }}");
+                           clickSound.volume = 0.1;
                        }
-                       clickSound.volume = 0.1;
+
                        clickSound.currentTime = 0;
                        clickSound.play().catch(error => {
                            console.error("Audio playback error:", error);
                        });
                    }
                });
-           });
 
-           //AI Generated
-           document.addEventListener('alpine:init', () => {
+               Alpine.store('jump', {
+                   click() {
+                       let  clickSound = new Audio("{{ asset('audio/jump.mp3') }}");
+                       clickSound.volume = 0.05;
+                       clickSound.currentTime = 0;
+                       clickSound.play().catch(error => {
+                           console.error("Audio playback error:", error);
+                       });
+                   }
+               });
+
                Alpine.data('starfield', () => ({
                    boost: 0,
                    stars: [],
