@@ -4,6 +4,7 @@ namespace App\Livewire\Components;
 
 use App\Services\DataResolverService;
 use Illuminate\View\View;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class UserTerminal extends Component
@@ -99,6 +100,13 @@ class UserTerminal extends Component
             : max(0, $this->historyIndex - 1);
 
         $this->input = $this->history[$this->historyIndex];
+    }
+
+    #[On('fill-input')]
+    public function setInput(string $input): void
+    {
+        $this->input = $input;
+        $this->runCommand();
     }
 
     public function historyDown(): void

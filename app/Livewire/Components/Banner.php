@@ -10,4 +10,9 @@ class Banner extends Component
     {
         return view('livewire.components.banner');
     }
+
+    public function setInput(string $input): void
+    {
+        $this->dispatch('fill-input', $input);
+    }
 }

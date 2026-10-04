@@ -15,9 +15,11 @@ return [
     'about' => [
         'name' => 'Saleh Ahmed',
         'role' => 'Junior Software Engineer',
-        'intro' => 'I am a junior software engineer from Yemen, living in Kuala Lumpur. '
-            .'I build backend apps with PHP and Laravel, and I also work with .NET. '
-            .'I like APIs, authentication, queues, real-time apps, and clean code with tests.',
+        'intro' => <<<'TEXT'
+                    I'm Saleh, a junior software engineer from Yemen, currently living in Kuala Lumpur. I'm still at the beginning of my career and have a lot to learn, but I'm willing to put in the time and effort to improve.
+                    I value knowledge, hard work, and sharing what I learn with others. I enjoy learning from people around me, helping others when I can, and continuously working on becoming a better engineer and a better person.
+                    TEXT,
+
         'status' => 'Open to work',
         'location' => 'Kuala Lumpur, Malaysia',
         'languages' => 'Arabic (native), English (fluent)',
@@ -28,9 +30,9 @@ return [
                 'company' => 'Pixalink',
                 'period' => '04/2025 - 07/2026',
                 'points' => [
-                    'Built CRM, rewards, and campaign features with Laravel, Livewire, Filament, and MySQL.',
-                    'Used queue workers to turn external transactions into customer rewards without blocking.',
-                    'Wrote tests with Pest PHP and worked with code reviews, branches, and pull requests.',
+                    'Contributed to CRM, rewards, and campaign features using Laravel, Livewire, Filament, and MySQL.',
+                    'Worked on tasks involving queue workers and external transactions to process customer rewards without blocking the application.',
+                    'Wrote unit and feature tests with Pest PHP and worked with code reviews, branches, and pull requests.',
                 ],
             ],
             [
@@ -187,6 +189,11 @@ $k                   $F
                                     "#*$$$$P*""
 
              ',
+        'type-help' => '
+┌┬┐┬ ┬┌─┐┌─┐  ┌─  ┬ ┬┌─┐┬  ┌─┐  ─┐  ┌┬┐┌─┐  ┬  ┬┬┌─┐┬ ┬  ┌┬┐┬ ┬┌─┐ ┌─┐┌─┐┌┬┐┌┬┐┌─┐┌┐┌┌┬┐┌─┐
+ │ └┬┘├─┘├┤   │   ├─┤├┤ │  ├─┘   │   │ │ │  └┐┌┘│├┤ │││   │ ├─┤├┤  │  │ │││││││├─┤│││ ││└─┐
+ ┴  ┴ ┴  └─┘  └─  ┴ ┴└─┘┴─┘┴    ─┘   ┴ └─┘   └┘ ┴└─┘└┴┘   ┴ ┴ ┴└─┘ └─┘└─┘┴ ┴┴ ┴┴ ┴┘└┘─┴┘└─┘
+',
     ],
     'projects' => [
         'categories' => ['all', 'web', 'ai'],
@@ -251,13 +258,13 @@ $k                   $F
     ],
 
     'social' => [
-        'twitter' => [
-            'name' => 'Twitter',
-            'link' => 'https://twitter.com/',
+        'email' => [
+            'name' => 'Email',
+            'link' => 'mailto:salehaldhaheri09@gmail.com',
         ],
-        'instagram' => [
-            'name' => 'Instagram',
-            'link' => 'https://instagram.com/',
+        'whatsapp' => [
+            'name' => 'WhatsApp',
+            'link' => 'https://wa.me/172338564',
         ],
         'github' => [
             'name' => 'Github',
@@ -266,6 +273,14 @@ $k                   $F
         'linkedin' => [
             'name' => 'LinkedIn',
             'link' => 'https://www.linkedin.com/in/saleh-aldhaheri-625b09419/',
+        ],
+        'instagram' => [
+            'name' => 'Instagram',
+            'link' => 'https://www.instagram.com/salehaldahiry/',
+        ],
+        'twitter' => [
+            'name' => 'Twitter',
+            'link' => 'https://x.com/DhaheriSaleh',
         ],
     ],
 ];
