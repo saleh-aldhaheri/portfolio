@@ -1,3 +1,4 @@
-<div class="py-3 h-full">
-  <livewire:components.user-terminal />
+<div class="py-3 w-full relative">
+  <livewire:components.user-terminal/>
+  <livewire:components.chat/>
 </div>

@@ -29,7 +29,7 @@
     <body class="bg-base text-main min-h-screen flex flex-col">
 
         <x-header />
-        <main class="container flex-1 mx-auto px-4 py-6">
+        <main class="container flex-1 mx-auto px-4 py-6 flex">
             <canvas id="spaceCanvas" class="fixed inset-0 w-full h-full pointer-events-none z-[-1]"></canvas>
             {{ $slot }}
         </main>
