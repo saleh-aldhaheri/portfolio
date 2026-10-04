@@ -7,7 +7,9 @@ use Livewire\Component;
 
 class UserTerminal extends Component
 {
-    public ?string $command = null;
+    public string $input = '';
+
+    public string $command = '';
 
     public array $history = [];
 
@@ -15,32 +17,36 @@ class UserTerminal extends Component
 
     public bool $showBanner = true;
 
+    public function mount(): void
+    {
+        // initial value
+        $this->command = 'banner';
+    }
+
     public function render(): View
     {
-        $component = $this->resolveDisplayComponent();
+        return view('livewire.components.user-terminal');
+    }
 
-        return view('livewire.components.user-terminal', compact('component'));
+    private function validateCommand(string $input): bool
+    {
+        return array_key_exists($input, config('commands'));
     }
 
     public function runCommand(): void
     {
-        $command = strtolower(trim($this->command ?? ''));
-        $this->command = '';
+        $input = strtolower(trim($this->input));
+
         $this->historyIndex = null;
 
-        if ($command === '') {
+        if ($input === '') {
             return;
         }
 
-        if ($command === 'banner') {
-            $this->showBanner = true;
+        $this->command = $this->validateCommand($input) ? $input : 'error';
 
-            return;
-        }
-
-        $this->showBanner = false;
-        $this->history = array_values(array_diff($this->history, [$command]));
-        $this->history[] = $command;
+        $this->history = array_values(array_diff($this->history, [$input]));
+        $this->history[] = $input;
     }
 
     public function historyUp(): void
@@ -53,7 +59,7 @@ class UserTerminal extends Component
             ? count($this->history) - 1
             : max(0, $this->historyIndex - 1);
 
-        $this->command = $this->history[$this->historyIndex];
+        $this->input = $this->history[$this->historyIndex];
     }
 
     public function historyDown(): void
@@ -64,27 +70,9 @@ class UserTerminal extends Component
 
         if ($this->historyIndex < count($this->history) - 1) {
             $this->historyIndex++;
-            $this->command = $this->history[$this->historyIndex];
+            $this->input = $this->history[$this->historyIndex];
         } else {
             $this->historyIndex = null;
-            $this->command = '';
         }
-    }
-
-    private function resolveDisplayComponent(): array
-    {
-        $history = $this->history;
-        $command = ($this->showBanner || empty($history)) ? 'banner' : end($history);
-
-        $resolved = resolveComponents($command);
-
-        if (empty($resolved)) {
-            $resolved = resolveComponents('error', ['command' => $command]);
-        }
-
-        $resolved['command'] = $command;
-        $resolved['key'] = 'component-'.$command;
-
-        return $resolved;
     }
 }

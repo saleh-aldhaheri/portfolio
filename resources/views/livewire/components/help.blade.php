@@ -1,23 +1,15 @@
-<div class="w-full space-y-4 text-sm">
-    @foreach($groups as $title => $commands)
-        <section>
-            <h3 class="font-bold text-secondary mb-1"># {{ $title }}</h3>
+<div class="w-full text-sm">
+    <h2 class="mb-3 font-bold text-primary">Available commands</h2>
 
-            <dl class="grid grid-cols-1 sm:grid-cols-[14rem_1fr] gap-x-6 gap-y-1">
-                @foreach($commands as $item)
-                    <dt class="font-bold text-primary whitespace-nowrap">
-                        {{ $item['command'] }}
-                    </dt>
-                    <dd class="opacity-80 mb-2 sm:mb-0">
-                        {{ $item['description'] }}
-                    </dd>
-                @endforeach
-            </dl>
-        </section>
-    @endforeach
-    <di>
-        <p class="text-muted">
-             Tip: use ↑ ↓ for history
-        </p>
-    </di>
+    <dl class="grid grid-cols-1 gap-y-2 sm:grid-cols-[max-content_1fr] sm:gap-x-6">
+        @foreach ($data as $item)
+            <dt class="font-bold text-primary whitespace-nowrap">{{ $item['command'] }}</dt>
+            <dd class="opacity-80 mb-2 sm:mb-0">{{ $item['description'] }}</dd>
+        @endforeach
+    </dl>
+
+    <p class="mt-4 border-t pt-3 text-muted">
+        Tip: use <kbd class="rounded border px-1.5 text-xs">↑</kbd>
+        <kbd class="rounded border px-1.5 text-xs">↓</kbd> for history
+    </p>
 </div>

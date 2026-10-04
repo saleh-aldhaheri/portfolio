@@ -4,9 +4,13 @@
     'delay' => 0,
 ])
 
+@php
+ $data = \App\Services\DataResolverService::resolve('ascii');
+@endphp
+
 <div
     x-data="{
-        text: @js(config('ascii.'.$name)),
+        text: @js($data[$name]),
         displayText: '',
         index: 0,
         display() {

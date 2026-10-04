@@ -1,30 +1,14 @@
-<div>
-    <p id="command-error" role="alert" class="mt-2 text-sm">
-    <div class="ml-2 sm:ml-4 text-sm sm:text-base" style="color: var(--theme-outputText);">
-        <div style="color: var(--theme-error);">
-            <pre>❌ {{$command ?? 'error'}}: command not found</pre>
-        </div>
-        <div style="color: var(--theme-outputText);">
-            <pre></pre>
-        </div>
-        <div style="color: var(--theme-warning);">
-            <pre>💡 Did you mean:</pre>
-        </div>
-        <div style="color: var(--theme-outputText);">
-            <pre>   • help      - Show available commands</pre>
-        </div>
-        <div style="color: var(--theme-outputText);">
-            <pre>   • projects  - View my projects</pre>
-        </div>
-        <div style="color: var(--theme-outputText);">
-            <pre>   • about     - Learn about me</pre>
-        </div>
-        <div style="color: var(--theme-outputText);">
-            <pre>   • contact   - Contact me</pre>
-        </div>
-        <div class="break_words">
-            <pre>   • banner    - To display the banner</pre>
-        </div>
-    </div>
+<div class="ml-2 text-sm sm:ml-4 sm:text-main ">
+    <p role="alert" class="text-error break-words">
+        <span aria-hidden="true">❌</span>
+        {{ filled($command ?? null) ? $command : 'error' }}: command not found
     </p>
+
+    <p class="mt-3 text-warning">
+        <span aria-hidden="true">💡</span> Did you mean:
+    </p>
+
+    <dl class="mt-2 grid grid-cols-1 gap-y-2 sm:grid-cols-[max-content_1fr] sm:gap-x-4">
+      <livewire:components.help />
+    </dl>
 </div>

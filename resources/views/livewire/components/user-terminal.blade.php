@@ -17,21 +17,40 @@
                        class="bg-transparent flex-1 min-w-0 text-sm outline-none caret-primary"
                        @keyup="Alpine.store('audio').click()"
                        @keyup.enter="$wire.runCommand(); $el.value = ''"
-                       @keydown.arrow-up.prevent="$wire.historyUp().then(() => { $el.value = $wire.command; })"
-                       @keydown.arrow-down.prevent="$wire.historyDown().then(() => { $el.value = $wire.command; })"
-                       wire:model="command" maxlength="40" name="command"
+                       @keydown.arrow-up.prevent="$wire.historyUp().then(() => { $el.value = $wire.input; })"
+                       @keydown.arrow-down.prevent="$wire.historyDown().then(() => { $el.value = $wire.input; })"
+                       wire:model="input" maxlength="40" name="input"
                        autocomplete="off" spellcheck="false" aria-describedby="command-error">
             </div>
         </div>
         {{-- Render --}}
-            @if($component['command'] !== 'banner')
-                <div class="font-bold">
-                    <div class="text-primary">user@portfolio:~$ {{$component['command']}}</div>
-                </div>
-            @endif
-            <div class="pb-3">
-                @livewire($component['component'], $component['props'], key($component['key']))
+        @if($this->command !== 'banner')
+            <div class="font-bold mb-2">
+                <div class="text-primary">user@portfolio:~$ {{$input}}</div>
             </div>
+        @endif
+        @switch($this->command)
+            @case('banner')
+                <livewire:components.banner/>
+                @break
+            @case('help')
+                <livewire:components.help/>
+                @break
+            @case('about')
+                <livewire:components.about/>
+                @break
+            @case('project')
+                Not Yet
+                @break
+            @case('contact')
+                Not Yet
+                @break
+            @case('theme')
+                Not Yet
+                @break
+            @default
+                <livewire:components.error :command="$input"/>
+        @endswitch
     </div>
 </div>
 
