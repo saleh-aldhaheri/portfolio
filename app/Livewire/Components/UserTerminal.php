@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Components;
 
+use App\Services\DataResolverService;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -17,6 +18,8 @@ class UserTerminal extends Component
 
     public bool $showBanner = true;
 
+    public ?string $themeOutput = null;
+
     public function mount(): void
     {
         // initial value
@@ -28,9 +31,9 @@ class UserTerminal extends Component
         return view('livewire.components.user-terminal');
     }
 
-    private function validateCommand(string $input): bool
+    private function validateCommand(string $name): bool
     {
-        return array_key_exists($input, config('commands'));
+        return array_key_exists($name, config('commands'));
     }
 
     public function runCommand(): void
@@ -43,10 +46,46 @@ class UserTerminal extends Component
             return;
         }
 
-        $this->command = $this->validateCommand($input) ? $input : 'error';
+        $parts = explode(' ', $input);
+        $name = $parts[0];
+        $args = array_slice($parts, 1);
+
+        $this->command = $name === 'theme'
+            ? $this->handleTheme($args)
+            : ($this->validateCommand($name) ? $name : 'error');
 
         $this->history = array_values(array_diff($this->history, [$input]));
         $this->history[] = $input;
+
+        $this->input = '';
+    }
+
+    private function handleTheme(array $args): string
+    {
+        $sub = $args[0] ?? null;
+
+        if ($sub === 'list') {
+            $this->themeOutput = null;
+
+            return 'theme';
+        }
+
+        if ($sub === 'set' && isset($args[1])) {
+            $theme = $args[1];
+
+            if (in_array($theme, DataResolverService::resolve('themes'), true)) {
+                $this->js("window.setTheme('{$theme}')");
+                $this->themeOutput = "Theme set to {$theme}";
+            } else {
+                $this->themeOutput = "Unknown theme: {$theme}";
+            }
+
+            return 'theme';
+        }
+
+        $this->themeOutput = 'Usage: theme set <name> | theme list';
+
+        return 'theme';
     }
 
     public function historyUp(): void

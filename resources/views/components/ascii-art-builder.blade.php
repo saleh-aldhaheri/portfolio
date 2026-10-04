@@ -27,5 +27,5 @@
     x-init="setTimeout(() => display(), {{ $delay }})"
     class="h-full flex items-center justify-center"
 >
-    <pre class="font-mono leading-none bg-black p-4 rounded" x-text="displayText"></pre>
+    <pre class="font-mono leading-none p-4 rounded" x-text="displayText"></pre>
 </div>

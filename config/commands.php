@@ -4,7 +4,7 @@ return [
     'banner' => null,
     'help' => null,
     'about' => null,
-    'project' => null,
+    'projects' => null,
     'contact' => null,
     'theme' => ['set', 'list'],
     'linkedin' => null,

@@ -23,8 +23,9 @@
                        autocomplete="off" spellcheck="false" aria-describedby="command-error">
             </div>
         </div>
+
         {{-- Render --}}
-        @if($this->command !== 'banner')
+        @if(isset($input))
             <div class="font-bold mb-2">
                 <div class="text-primary">user@portfolio:~$ {{$input}}</div>
             </div>
@@ -39,14 +40,14 @@
             @case('about')
                 <livewire:components.about/>
                 @break
-            @case('project')
-                Not Yet
+            @case('projects')
+                <livewire:components.project />
                 @break
             @case('contact')
                 Not Yet
                 @break
             @case('theme')
-                Not Yet
+                <livewire:components.theme-list :output="$this->themeOutput" />
                 @break
             @default
                 <livewire:components.error :command="$input"/>

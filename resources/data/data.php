@@ -9,7 +9,7 @@ return [
         ['command' => 'linkedin', 'description' => 'Open my LinkedIn profile'],
         ['command' => 'github',   'description' => 'Open my GitHub profile'],
         ['command' => 'email',    'description' => 'Show my email address'],
-        ['command' => 'theme set <name>', 'description' => 'Change theme: dark, light, dracula'],
+        ['command' => 'theme set <name>', 'description' => 'Change themes, use theme list to check available themes'],
         ['command' => 'theme list', 'description' => 'show available themes'],
         ['command' => 'help',             'description' => 'Show this list'],
     ],
@@ -205,5 +205,71 @@ $k                   $F
 | banner           | Show the welcome banner                                             |
 +==================+=====================================================================+
     ',
+    ],
+    'projects' => [
+        'categories' => ['all', 'web', 'ai'],
+        'data' => [
+
+            'portfolio-terminal' => [
+                'name' => 'Portfolio Terminal',
+                'categories' => ['web', 'ai'],
+                'image' => 'images/projects/portfolio.webp',
+                'info' => 'A command-style developer portfolio built with Laravel and Livewire, featuring an interactive terminal-inspired interface.',
+                'github' => 'https://github.com/saleh-aldhaheri/portfolio',
+                'link' => null,
+            ],
+
+            'blog-system' => [
+                'name' => 'Blog System',
+                'categories' => ['web'],
+                'image' => 'images/projects/zenith.webp',
+                'info' => 'A Laravel REST API for a blogging platform with authentication, post management, comments, interactions, follows, notifications, media uploads, and real-time WebSocket events.',
+                'github' => 'https://github.com/saleh-aldhaheri/blog',
+                'link' => 'http://app.zenith-blog.blog/',
+            ],
+
+            'yalla-chat' => [
+                'name' => 'Yalla Chat',
+                'categories' => ['web', 'ai'],
+                'image' => 'images/projects/yalla-chat.webp',
+                'info' => 'A real-time chat application with private and group messaging, AI agents, scheduled messages, Google Calendar integration, and email and WhatsApp notifications.',
+                'github' => 'https://github.com/saleh-aldhaheri/yallachat',
+                'link' => 'https://yallachat.zenith-blog.blog/',
+            ],
+
+            'rapix' => [
+                'name' => 'Rapix',
+                'categories' => ['web'],
+                'image' => 'images/projects/rapix.webp',
+                'info' => 'A custom PHP framework project focused on building reusable application infrastructure with routing, dependency injection, middleware, database access, authentication, and testing.',
+                'github' => 'https://github.com/saleh-aldhaheri/Rapix',
+                'link' => null,
+            ],
+
+            'recipe-system' => [
+                'name' => 'Recipe Management System',
+                'categories' => ['web'],
+                'image' => null,
+                'info' => 'A recipe and inventory management system for professional kitchens, with recipe scheduling, ingredient tracking, automatic inventory updates, transaction history, dashboards, and Excel imports.',
+                'github' => 'https://github.com/saleh-aldhaheri/recipe_system',
+                'link' => null,
+            ],
+        ],
+    ],
+
+    'themes' => [
+        'dark',
+        'light',
+        'dracula',
+        'nord',
+        'gruvbox',
+        'tokyo-night',
+        'catppuccin',
+        'solarized',
+        'one-dark',
+        'rose-pine',
+        'kanagawa',
+        'monokai',
+        'everforest',
     ],
 ];

@@ -42,6 +42,137 @@
     --brand-error: #FF5555;
 }
 
+.nord {
+    --brand-bg-base: #2E3440;
+    --brand-bg-surface: #3B4252;
+    --brand-text-main: #D8DEE9;
+    --brand-text-muted: #81A1C1;
+    --brand-primary: #88C0D0;
+    --brand-secondary: #81A1C1;
+    --brand-success: #A3BE8C;
+    --brand-warning: #EBCB8B;
+    --brand-info: #88C0D0;
+    --brand-error: #BF616A;
+}
+
+.gruvbox {
+    --brand-bg-base: #282828;
+    --brand-bg-surface: #3C3836;
+    --brand-text-main: #EBDBB2;
+    --brand-text-muted: #A89984;
+    --brand-primary: #B8BB26;
+    --brand-secondary: #83A598;
+    --brand-success: #B8BB26;
+    --brand-warning: #FABD2F;
+    --brand-info: #83A598;
+    --brand-error: #FB4934;
+}
+
+.tokyo-night {
+    --brand-bg-base: #1A1B26;
+    --brand-bg-surface: #24283B;
+    --brand-text-main: #A9B1D6;
+    --brand-text-muted: #565F89;
+    --brand-primary: #7AA2F7;
+    --brand-secondary: #BB9AF7;
+    --brand-success: #9ECE6A;
+    --brand-warning: #E0AF68;
+    --brand-info: #7DCFFF;
+    --brand-error: #F7768E;
+}
+
+.catppuccin {
+    --brand-bg-base: #1E1E2E;
+    --brand-bg-surface: #313244;
+    --brand-text-main: #CDD6F4;
+    --brand-text-muted: #7F849C;
+    --brand-primary: #CBA6F7;
+    --brand-secondary: #89B4FA;
+    --brand-success: #A6E3A1;
+    --brand-warning: #F9E2AF;
+    --brand-info: #89DCEB;
+    --brand-error: #F38BA8;
+}
+
+.solarized {
+    --brand-bg-base: #002B36;
+    --brand-bg-surface: #073642;
+    --brand-text-main: #839496;
+    --brand-text-muted: #586E75;
+    --brand-primary: #2AA198;
+    --brand-secondary: #268BD2;
+    --brand-success: #859900;
+    --brand-warning: #B58900;
+    --brand-info: #268BD2;
+    --brand-error: #DC322F;
+}
+
+.one-dark {
+    --brand-bg-base: #282C34;
+    --brand-bg-surface: #21252B;
+    --brand-text-main: #ABB2BF;
+    --brand-text-muted: #5C6370;
+    --brand-primary: #61AFEF;
+    --brand-secondary: #C678DD;
+    --brand-success: #98C379;
+    --brand-warning: #E5C07B;
+    --brand-info: #56B6C2;
+    --brand-error: #E06C75;
+}
+
+.rose-pine {
+    --brand-bg-base: #191724;
+    --brand-bg-surface: #1F1D2E;
+    --brand-text-main: #E0DEF4;
+    --brand-text-muted: #6E6A86;
+    --brand-primary: #C4A7E7;
+    --brand-secondary: #9CCFD8;
+    --brand-success: #9CCFD8;
+    --brand-warning: #F6C177;
+    --brand-info: #9CCFD8;
+    --brand-error: #EB6F92;
+}
+
+.kanagawa {
+    --brand-bg-base: #1F1F28;
+    --brand-bg-surface: #2A2A37;
+    --brand-text-main: #DCD7BA;
+    --brand-text-muted: #727169;
+    --brand-primary: #7E9CD8;
+    --brand-secondary: #957FB8;
+    --brand-success: #98BB6C;
+    --brand-warning: #E6C384;
+    --brand-info: #7FB4CA;
+    --brand-error: #E46876;
+}
+
+.monokai {
+    --brand-bg-base: #272822;
+    --brand-bg-surface: #3E3D32;
+    --brand-text-main: #F8F8F2;
+    --brand-text-muted: #75715E;
+    --brand-primary: #A6E22E;
+    --brand-secondary: #66D9EF;
+    --brand-success: #A6E22E;
+    --brand-warning: #E6DB74;
+    --brand-info: #66D9EF;
+    --brand-error: #F92672;
+}
+
+.everforest {
+    --brand-bg-base: #2D353B;
+    --brand-bg-surface: #343F44;
+    --brand-text-main: #D3C6AA;
+    --brand-text-muted: #859289;
+    --brand-primary: #A7C080;
+    --brand-secondary: #7FBBB3;
+    --brand-success: #A7C080;
+    --brand-warning: #DBBC7F;
+    --brand-info: #7FBBB3;
+    --brand-error: #E67E80;
+}
+
+
 @keyframes terminal-blink {
     0%, 100% { opacity: 1; }
     50% { opacity: 0; }
