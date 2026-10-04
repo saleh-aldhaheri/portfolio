@@ -1,7 +1,7 @@
 <div class="border-main">
     <div>
         {{-- Input --}}
-        <div class="mx-auto mb-3">
+        <div class="mx-auto mb-10">
             <div class="w-full flex items-baseline gap-2">
                 <label for="command" class="sr-only">Type a command</label>
 
@@ -25,11 +25,6 @@
         </div>
 
         {{-- Render --}}
-        @if(isset($input))
-            <div class="font-bold mb-2">
-                <div class="text-primary">user@portfolio:~$ {{$input}}</div>
-            </div>
-        @endif
         @switch($this->command)
             @case('banner')
                 <livewire:components.banner/>
@@ -44,10 +39,13 @@
                 <livewire:components.project />
                 @break
             @case('contact')
-                Not Yet
+                <livewire:components.contact />
                 @break
             @case('theme')
                 <livewire:components.theme-list :output="$this->themeOutput" />
+                @break
+            @case('social')
+                <livewire:components.social />
                 @break
             @default
                 <livewire:components.error :command="$input"/>

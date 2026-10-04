@@ -6,9 +6,7 @@ return [
         ['command' => 'projects', 'description' => 'Show my projects'],
         ['command' => 'banner',   'description' => 'Show the welcome banner'],
         ['command' => 'contact',  'description' => 'Contact details and message form'],
-        ['command' => 'linkedin', 'description' => 'Open my LinkedIn profile'],
-        ['command' => 'github',   'description' => 'Open my GitHub profile'],
-        ['command' => 'email',    'description' => 'Show my email address'],
+        ['command' => 'social',   'description' => 'My social profiles'],
         ['command' => 'theme set <name>', 'description' => 'Change themes, use theme list to check available themes'],
         ['command' => 'theme list', 'description' => 'show available themes'],
         ['command' => 'help',             'description' => 'Show this list'],
@@ -189,27 +187,10 @@ $k                   $F
                                     "#*$$$$P*""
 
              ',
-
-        'help' => '
-+==================+=====================================================================+
-| Command          | Description                                                         |
-+==================+=====================================================================+
-| help             | Show this list of commands                                          |
-| about            | Show information about me                                           |
-| projects         | Show my projects                                                    |
-| contact          | Show my contact details and send me a message with the contact form |
-| linkedin         | Open my LinkedIn profile                                            |
-| github           | Open my GitHub profile                                              |
-| email            | Show my email address                                               |
-| theme set <name> | Change the theme. Available themes: dark, light, dracula            |
-| banner           | Show the welcome banner                                             |
-+==================+=====================================================================+
-    ',
     ],
     'projects' => [
         'categories' => ['all', 'web', 'ai'],
         'data' => [
-
             'portfolio-terminal' => [
                 'name' => 'Portfolio Terminal',
                 'categories' => ['web', 'ai'],
@@ -218,7 +199,6 @@ $k                   $F
                 'github' => 'https://github.com/saleh-aldhaheri/portfolio',
                 'link' => null,
             ],
-
             'blog-system' => [
                 'name' => 'Blog System',
                 'categories' => ['web'],
@@ -227,7 +207,6 @@ $k                   $F
                 'github' => 'https://github.com/saleh-aldhaheri/blog',
                 'link' => 'http://app.zenith-blog.blog/',
             ],
-
             'yalla-chat' => [
                 'name' => 'Yalla Chat',
                 'categories' => ['web', 'ai'],
@@ -236,7 +215,6 @@ $k                   $F
                 'github' => 'https://github.com/saleh-aldhaheri/yallachat',
                 'link' => 'https://yallachat.zenith-blog.blog/',
             ],
-
             'rapix' => [
                 'name' => 'Rapix',
                 'categories' => ['web'],
@@ -245,7 +223,6 @@ $k                   $F
                 'github' => 'https://github.com/saleh-aldhaheri/Rapix',
                 'link' => null,
             ],
-
             'recipe-system' => [
                 'name' => 'Recipe Management System',
                 'categories' => ['web'],
@@ -271,5 +248,24 @@ $k                   $F
         'kanagawa',
         'monokai',
         'everforest',
+    ],
+
+    'social' => [
+        'twitter' => [
+            'name' => 'Twitter',
+            'link' => 'https://twitter.com/',
+        ],
+        'instagram' => [
+            'name' => 'Instagram',
+            'link' => 'https://instagram.com/',
+        ],
+        'github' => [
+            'name' => 'Github',
+            'link' => 'https://github.com/saleh-aldhaheri',
+        ],
+        'linkedin' => [
+            'name' => 'LinkedIn',
+            'link' => 'https://www.linkedin.com/in/saleh-aldhaheri-625b09419/',
+        ],
     ],
 ];

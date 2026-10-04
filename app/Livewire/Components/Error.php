@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Components;
 
+use App\Services\DataResolverService;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -11,6 +12,8 @@ class Error extends Component
 
     public function render(): View
     {
-        return view('livewire.components.error');
+        return view('livewire.components.error',[
+            'data' => DataResolverService::resolve('help'),
+        ]);
     }
 }

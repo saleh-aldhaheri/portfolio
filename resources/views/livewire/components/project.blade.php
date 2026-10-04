@@ -1,4 +1,4 @@
-<div class="px-2 py-6 font-mono text-sm text-muted">
+<div class="px-2 text-sm text-muted">
     <header class="mb-6 text-center">
         <h2 class="mb-2 text-xl font-bold text-info"><span class="text-primary">$</span> ls projects/</h2>
         <p class="text-xs text-warning">- most recent works -</p>
@@ -14,7 +14,7 @@
                             class="rounded text-w px-3 py-1 before:content-['[_'] after:content-['_]']
                                    focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
                                    {{ $c === $category ? 'bg-primary font-bold text-black' : 'hover:text-outputText' }}">
-                        {{ $c }}
+                        {{ucfirst($c) }}
                     </button>
                 </li>
             @endforeach
