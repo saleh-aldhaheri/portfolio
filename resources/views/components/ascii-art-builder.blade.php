@@ -4,9 +4,13 @@
     'delay' => 0,
 ])
 
+@php
+ $data = \App\Services\DataResolverService::resolve('ascii');
+@endphp
+
 <div
     x-data="{
-        text: @js(config('ascii.'.$name)),
+        text: @js($data[$name]),
         displayText: '',
         index: 0,
         display() {
@@ -23,5 +27,5 @@
     x-init="setTimeout(() => display(), {{ $delay }})"
     class="h-full flex items-center justify-center"
 >
-    <pre class="font-mono leading-none bg-black p-4 rounded" x-text="displayText"></pre>
+    <pre class="font-mono leading-none p-4 rounded" x-text="displayText"></pre>
 </div>

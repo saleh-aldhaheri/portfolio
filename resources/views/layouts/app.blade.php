@@ -6,6 +6,22 @@
 
         <title>{{ $title ?? config('app.name') }}</title>
 
+        <script>
+            window.setTheme = (theme) => {
+                const root = document.documentElement;
+                root.className = '';
+
+                if (theme && theme !== 'dark') {
+                    root.classList.add(theme);
+                    localStorage.setItem('theme', theme);
+                } else {
+                    localStorage.removeItem('theme');
+                }
+            };
+
+            window.setTheme(localStorage.getItem('theme'));
+        </script>
+
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
