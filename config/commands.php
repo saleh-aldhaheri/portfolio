@@ -7,7 +7,5 @@ return [
     'projects' => null,
     'contact' => null,
     'theme' => ['set', 'list'],
-    'linkedin' => null,
-    'github' => null,
-    'email' => null,
+    'social' => null,
 ];

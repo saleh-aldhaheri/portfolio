@@ -4,7 +4,7 @@
     @else
         <dl>
             @foreach($themes as $themeName)
-                <dt class="font-bold text-primary whitespace-nowrap mb-2">{{ $themeName }}</dt>
+                <dt class="font-bold whitespace-nowrap mb-2">{{ $themeName }}</dt>
             @endforeach
         </dl>
     @endif

@@ -18,7 +18,6 @@
                     localStorage.removeItem('theme');
                 }
             };
-
             window.setTheme(localStorage.getItem('theme'));
         </script>
 
