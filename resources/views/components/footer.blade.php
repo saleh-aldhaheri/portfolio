@@ -1,4 +1,4 @@
-<footer class="text-center py-6 text-main border-t border-muted/40 w-full">
+<footer class="text-center bg-base py-6 text-main border-t border-muted/40 w-full">
     <blockquote class="pb-4 flex flex-col items-center">
 
         <x-terminal-typing

@@ -14,7 +14,7 @@
                             class="rounded text-w px-3 py-1 before:content-['[_'] after:content-['_]']
                                    focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
                                    {{ $c === $category ? 'bg-primary font-bold text-black' : 'hover:text-outputText' }}">
-                        {{ $c }}
+                        {{ucfirst($c) }}
                     </button>
                 </li>
             @endforeach

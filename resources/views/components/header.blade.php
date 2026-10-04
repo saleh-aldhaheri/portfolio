@@ -3,7 +3,12 @@
         <div class="flex items-center justify-between">
             <h1 class="text-sm md:text-main tracking-tight flex items-center gap-2">
                 <a href={{config('app.url')}}>
-                    <span class="text-primary text-lg font-bold">saleh-ahmed.dev</span>
+                    <div class="flex items-center gap-2  px-4 py-3 text-sm">
+                        <span class="size-2.5 rounded-full bg-error"></span>
+                        <span class="size-2.5 rounded-full bg-warning"></span>
+                        <span class="size-2.5 rounded-full bg-primary"></span>
+                        <span class="text-primary text-lg font-bold">saleh-ahmed.dev</span>
+                    </div>
                 </a>
             </h1>
 
