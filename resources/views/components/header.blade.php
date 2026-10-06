@@ -17,7 +17,7 @@
                    target="_blank"
                    aria-label="download resume as pdf"
                    class="text-primary hover:bg-primary/10 px-2 py-0.5 rounded transition-colors"
-                   x-on:click="$store.audio.click()"
+                   x-on:click="$store.audio.click(); Livewire.dispatch('log-activity', 'open-resume')"
                 >
                     [ resume ]
                 </a>
@@ -34,17 +34,17 @@
 
         <div class="hidden md:flex items-center gap-4 text-sm text-main">|
             <a class="hover:text-primary hover:-translate-y-0.5 transition-all duration-150 ease-in-out" target="_blank" href="https://github.com/saleh-aldhaheri"
-                x-on:click="$store.audio.click()"
+                x-on:click="$store.audio.click(), Livewire.dispatch('log-activity', 'open-github')"
             >
                 ./Github,
             </a> |
             <a class="hover:text-primary hover:-translate-y-0.5 transition-all duration-150 ease-in-out" target="_blank" href="https://www.linkedin.com/in/saleh-aldhaheri-625b09419/"
-               x-on:click="$store.audio.click()"
+               x-on:click="$store.audio.click(), Livewire.dispatch('log-activity', 'open-linked')"
             >
                 ./LinkedIn,
             </a> |
             <a class="hover:text-primary hover:-translate-y-0.5 transition-all duration-150 ease-in-out" href="mailto:salehaldhaheri09@gmail.com"
-               x-on:click="$store.audio.click()"
+               x-on:click="$store.audio.click(), Livewire.dispatch('log-activity', 'open-email')"
             >
                 ./Email
             </a> |
@@ -52,9 +52,8 @@
             <a href="{{ asset('resume/Saleh_Ahmed_Resume.pdf') }}"
                target="_blank"
                aria-label="download resume as pdf"
-               x-on:click="$store.audio.click()"
                class="text-primary hover:bg-primary/10 px-2 py-0.5 rounded transition-colors"
-               x-on:click="$store.audio.click()"
+               x-on:click="$store.audio.click(); Livewire.dispatch('log-activity', 'open-resume')"
             >
                 [ resume ]
             </a>
@@ -68,7 +67,7 @@
             <div class="text-muted text-[10px] uppercase tracking-widest mb-1">// Social Links</div>
 
             <a class="hover:text-primary py-1 flex items-center gap-2 transition-colors group" target="_blank" href="https://github.com/saleh-aldhaheri"
-               x-on:click="$store.audio.click()"
+               x-on:click="$store.audio.click(); Livewire.dispatch('log-activity', 'open-github')"
             >
                 <span class="text-primary">$</span>
                 <span class="text-muted group-hover:text-primary transition-colors">cat</span>
@@ -76,7 +75,7 @@
             </a>
 
             <a class="hover:text-primary py-1 flex items-center gap-2 transition-colors group" target="_blank" href="https://www.linkedin.com/in/saleh-aldhaheri-625b09419/"
-               x-on:click="$store.audio.click()"
+               x-on:click="$store.audio.click(); Livewire.dispatch('log-activity', 'open-linkedin')"
             >
                 <span class="text-primary">$</span>
                 <span class="text-muted group-hover:text-primary transition-colors">cat</span>
@@ -84,7 +83,7 @@
             </a>
 
             <a class="hover:text-primary py-1 flex items-center gap-2 transition-colors group" href="mailto:salehaldhaheri09@gmail.com"
-               x-on:click="$store.audio.click()"
+               x-on:click="$store.audio.click(); Livewire.dispatch('log-activity', 'open-email')"
             >
                 <span class="text-primary">$</span>
                 <span class="text-muted group-hover:text-primary transition-colors">cat</span>

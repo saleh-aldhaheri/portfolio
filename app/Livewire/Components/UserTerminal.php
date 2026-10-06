@@ -57,7 +57,7 @@ class UserTerminal extends Component
 
         $this->history = array_values(array_diff($this->history, [$input]));
         $this->history[] = $input;
-
+        $this->dispatch('log-activity', $input);
         $this->input = '';
     }
 
