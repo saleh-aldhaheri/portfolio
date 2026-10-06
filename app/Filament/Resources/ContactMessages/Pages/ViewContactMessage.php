@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\ContactMessages\Pages;
 
 use App\Filament\Resources\ContactMessages\ContactMessageResource;
-use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\ViewRecord;
 
 class ViewContactMessage extends ViewRecord
@@ -13,7 +12,6 @@ class ViewContactMessage extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            DeleteAction::make(),
         ];
     }
 }

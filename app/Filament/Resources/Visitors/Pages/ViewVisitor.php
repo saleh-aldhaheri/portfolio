@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\Visitors\Pages;
 
 use App\Filament\Resources\Visitors\VisitorResource;
-use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\ViewRecord;
 
 class ViewVisitor extends ViewRecord
@@ -13,7 +12,6 @@ class ViewVisitor extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            DeleteAction::make(),
         ];
     }
 }
