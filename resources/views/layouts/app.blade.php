@@ -32,6 +32,7 @@
             {{ $slot }}
         </main>
         <x-footer/>
+        <x-toaster-hub />
 
         @livewireScripts
         <script>

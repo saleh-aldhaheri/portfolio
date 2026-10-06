@@ -2,14 +2,15 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Visitor;
+use App\Services\VisitorService;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
-class VisitorMiddleware
+readonly class VisitorMiddleware
 {
+    public function __construct(private VisitorService $visitorService) {}
+
     /**
      * Handle an incoming request.
      *
@@ -18,25 +19,12 @@ class VisitorMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $response = $next($request);
-        $uuid = $request->cookie('visitor');
 
-        if (! $uuid) {
-            $uuid = (string) Str::uuid();
-            $response->cookie('visitor', $uuid, 60 * 24 * 365);
+        $visitor = $this->visitorService->resolve($request);
+
+        if (! $request->cookie('visitor')) {
+            $response->cookie('visitor', $visitor->uuid, 60 * 24 * 365);
         }
-
-        Visitor::firstOrCreate(
-            ['uuid' => $uuid],
-            [
-                'ip_address' => $request->ip(),
-                'city' => $request->header('CF-IPCity') ?? 'Unknown',
-                'country' => $request->header('CF-IPCountry') ?? 'Unknown',
-                'os' => str_replace('"', '', $request->header('Sec-CH-UA-Platform') ?? 'Unknown'),
-                'browser' => $request->header('Sec-CH-UA') ?? $request->userAgent(),
-                'language' => substr($request->header('Accept-Language') ?? 'en', 0, 5),
-                'referrer' => $request->header('referer'),
-            ]
-        );
 
         return $response;
     }
