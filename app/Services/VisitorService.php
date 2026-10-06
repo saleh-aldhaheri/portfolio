@@ -17,12 +17,16 @@ class VisitorService
         $uuid = $request->cookie('visitor');
 
         if ($uuid && $visitor = Visitor::where('uuid', $uuid)->first()) {
+            $visitor->update([
+                'ip' => $request->ip(),
+            ]);
+
             return $visitor;
         }
 
         return Visitor::create([
             'uuid' => $uuid ?? (string) Str::uuid(),
-            'ip_address' => $request->ip(),
+            'ip_address' => $request->header('CF-Connecting-IP') ?? $request->ip(),
             'city' => $request->header('CF-IPCity') ?? 'Unknown',
             'country' => $request->header('CF-IPCountry') ?? 'Unknown',
             'os' => str_replace('"', '', $request->header('Sec-CH-UA-Platform') ?? 'Unknown'),
