@@ -20,8 +20,7 @@
             };
             window.setTheme(localStorage.getItem('theme'));
         </script>
-
-        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id={{ config('services.google.analytics_id') }}"></script>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         @livewireStyles
@@ -37,9 +36,13 @@
 
         @livewireScripts
         <script>
-           document.addEventListener('alpine:init', () => {
-
-           });
+            function analytic() {
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', "{{config('services.google.analytics_id')}}");
+            }
+            analytic();
 
            //AI Generated
            document.addEventListener('alpine:init', (e) => {
