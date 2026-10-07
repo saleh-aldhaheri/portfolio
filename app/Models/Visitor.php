@@ -50,4 +50,9 @@ class Visitor extends Model
     {
         return $this->hasMany(ContactMessage::class);
     }
+
+    public function messages(): HasMany
+    {
+        return $this->hasMany(Message::class);
+    }
 }
