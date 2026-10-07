@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Prunable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Visitor extends Model
 {
@@ -21,15 +22,12 @@ class Visitor extends Model
         'name',
         'company',
         'phone',
-        'occupation',
         'ip_address',
         'browser',
         'os',
         'email',
         'city',
         'country',
-        'language',
-        'referrer',
     ];
 
     public function prunable(): Builder
@@ -54,5 +52,10 @@ class Visitor extends Model
     public function messages(): HasMany
     {
         return $this->hasMany(Message::class);
+    }
+
+    public function latestMessage(): HasOne
+    {
+        return $this->hasOne(Message::class)->latestOfMany();
     }
 }

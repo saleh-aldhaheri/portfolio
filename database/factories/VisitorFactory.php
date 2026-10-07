@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Visitor;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends Factory<Visitor>
@@ -18,7 +19,7 @@ class VisitorFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'uuid' => (string) Str::uuid(),
         ];
     }
 }

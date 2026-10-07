@@ -26,11 +26,6 @@ class VisitorInfolist
                             ->placeholder('-'),
                         TextEntry::make('company')
                             ->placeholder('-'),
-                        TextEntry::make('occupation')
-                            ->placeholder('-'),
-                        TextEntry::make('user_id')
-                            ->numeric()
-                            ->placeholder('-'),
                     ])
                     ->columns(3),
                 Section::make('Location & Device')
@@ -48,13 +43,7 @@ class VisitorInfolist
                             ->placeholder('-'),
                         TextEntry::make('os')
                             ->placeholder('-'),
-                        TextEntry::make('language')
-                            ->placeholder('-'),
                         TextEntry::make('browser')
-                            ->placeholder('-')
-                            ->columnSpanFull(),
-                        TextEntry::make('referrer')
-                            ->url(fn (?string $state): ?string => $state)
                             ->placeholder('-')
                             ->columnSpanFull(),
                     ])

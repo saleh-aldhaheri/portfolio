@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\States;
 
 use App\Models\User;

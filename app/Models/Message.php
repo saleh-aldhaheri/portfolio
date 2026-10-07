@@ -11,14 +11,14 @@ class Message extends Model
     protected $fillable = [
         'message',
         'visitor_id',
-        'role'
+        'role',
     ];
 
     protected $casts = [
         'role' => MessageRole::class,
     ];
 
-    public function Visitor(): BelongsTo
+    public function visitor(): BelongsTo
     {
         return $this->belongsTo(Visitor::class);
     }

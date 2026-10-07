@@ -19,12 +19,7 @@ readonly class VisitorMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $response = $next($request);
-
-        $visitor = $this->visitorService->resolve($request);
-
-        if (! $request->cookie('visitor')) {
-            $response->cookie('visitor', $visitor->uuid, 60 * 24 * 365);
-        }
+        $this->visitorService->resolve($request);
 
         return $response;
     }

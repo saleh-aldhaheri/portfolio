@@ -19,11 +19,6 @@ return new class extends Migration
             $table->string('country')->nullable();
             $table->string('os')->nullable();
             $table->string('browser')->nullable();
-            $table->string('language')->nullable();
-            $table->text('referrer')->nullable();
-
-            // Agent collection fields
-            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->string('name')->nullable();
             $table->string('email')->nullable();
             $table->string('phone')->nullable();

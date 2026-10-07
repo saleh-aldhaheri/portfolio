@@ -5,7 +5,6 @@ namespace App\Livewire\Components;
 use App\Models\Visitor;
 use App\Services\ContactService;
 use App\Services\VisitorService;
-use Illuminate\Support\Facades\Cookie;
 use Illuminate\View\View;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
@@ -15,6 +14,10 @@ class Contact extends Component
     public string $name = '';
 
     public string $email = '';
+
+    public string $phone = '';
+
+    public string $company = '';
 
     public string $message = '';
 
@@ -33,6 +36,8 @@ class Contact extends Component
         $this->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255'],
+            'phone' => ['nullable', 'string', 'max:30'],
+            'company' => ['nullable', 'string', 'max:255'],
             'message' => ['required', 'string', 'max:5000'],
         ]);
 
@@ -44,6 +49,8 @@ class Contact extends Component
         $issued = app(ContactService::class)->issue([
             'name' => $this->name,
             'email' => $this->email,
+            'phone' => $this->phone ?: null,
+            'company' => $this->company ?: null,
             'message' => $this->message,
             'visitor_id' => $visitor->id,
             'verified_email' => $this->otpEmail,
@@ -74,13 +81,17 @@ class Contact extends Component
 
         $visitor = Visitor::find($payload['visitor_id']);
 
-        if ($visitor && $visitor->email === null) {
-            $visitor->update(['email' => $payload['verified_email']]);
+        if ($visitor) {
+            $visitor->update(array_filter([
+                'email' => $visitor->email === null ? $payload['verified_email'] : null,
+                'phone' => $payload['phone'] ?? null,
+                'company' => $payload['company'] ?? null,
+            ], fn ($value): bool => $value !== null));
         }
 
         app(ContactService::class)->store($payload);
 
-        $this->reset('name', 'email', 'message', 'otp', 'otpToken', 'otpEmail', 'requireOtp', 'linkingEmail');
+        $this->reset('name', 'email', 'phone', 'company', 'message', 'otp', 'otpToken', 'otpEmail', 'requireOtp', 'linkingEmail');
 
         Toaster::success('message sent. i will reply soon.');
     }
@@ -99,12 +110,6 @@ class Contact extends Component
     {
         $request = request();
 
-        $visitor = app(VisitorService::class)->resolve($request);
-
-        if (! $request->cookie('visitor')) {
-            Cookie::queue('visitor', $visitor->uuid, 60 * 24 * 365);
-        }
-
-        return $visitor;
+        return app(VisitorService::class)->resolve($request);
     }
 }

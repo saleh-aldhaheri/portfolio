@@ -16,7 +16,7 @@ class ContactService
     /**
      * Issue a fresh verification code for the given payload and email it.
      *
-     * @param  array{name: string, email: string, message: string, visitor_id: int, verified_email: string}  $payload
+     * @param  array{name: string, email: string, phone: string|null, company: string|null, message: string, visitor_id: int, verified_email: string}  $payload
      * @return array{token: string, code: string}
      */
     public function issue(array $payload): array
@@ -55,7 +55,7 @@ class ContactService
     /**
      * Verify a code against the pending token, returning the payload when valid.
      *
-     * @return array{name: string, email: string, message: string, visitor_id: int, verified_email: string}|null
+     * @return array{name: string, email: string, phone: string|null, company: string|null, message: string, visitor_id: int, verified_email: string}|null
      */
     public function verify(string $token, string $code): ?array
     {

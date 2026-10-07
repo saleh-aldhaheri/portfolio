@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Visitor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Str;
 
 class VisitorService
@@ -18,21 +19,23 @@ class VisitorService
 
         if ($uuid && $visitor = Visitor::where('uuid', $uuid)->first()) {
             $visitor->update([
-                'ip' => $request->ip(),
+                'ip_address' => $request->header('CF-Connecting-IP') ?? $request->ip(),
             ]);
 
             return $visitor;
         }
 
-        return Visitor::create([
+        $visitor = Visitor::create([
             'uuid' => $uuid ?? (string) Str::uuid(),
             'ip_address' => $request->header('CF-Connecting-IP') ?? $request->ip(),
             'city' => $request->header('CF-IPCity') ?? 'Unknown',
             'country' => $request->header('CF-IPCountry') ?? 'Unknown',
             'os' => str_replace('"', '', $request->header('Sec-CH-UA-Platform') ?? 'Unknown'),
             'browser' => $request->header('Sec-CH-UA') ?? $request->userAgent(),
-            'language' => substr($request->header('Accept-Language') ?? 'en', 0, 5),
-            'referrer' => $request->header('referer'),
         ]);
+
+        Cookie::queue('visitor', $visitor->uuid, 60 * 24 * 365);
+
+        return $visitor;
     }
 }
