@@ -56,6 +56,9 @@ class AdminPanelProvider extends PanelProvider
                 'danger' => Color::hex('#F85149'),
                 'gray' => Color::Slate,
             ])
+            ->passwordReset()
+            ->emailVerification()
+            ->profile()
             ->authMiddleware([
                 Authenticate::class,
             ]);
