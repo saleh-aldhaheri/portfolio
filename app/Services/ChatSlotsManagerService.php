@@ -6,7 +6,7 @@ use App\Models\Visitor;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 
-class ChatSlotsManager
+class ChatSlotsManagerService
 {
     public function addSlot(Visitor $visitor): bool
     {
@@ -35,12 +35,12 @@ class ChatSlotsManager
         return true;
     }
 
-    public function removeSlot(int $visitorId): void
+    public function removeSlot(Visitor $visitor): void
     {
         $chatStack = Cache::get($this->key(), []);
 
-        if (isset($chatStack[$visitorId])) {
-            unset($chatStack[$visitorId]);
+        if (isset($chatStack[$visitor->id])) {
+            unset($chatStack[$visitor->id]);
             Cache::put($this->key(), $chatStack, now()->addMinutes(60));
         }
     }

@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('browser')->nullable();
             $table->string('name')->nullable();
             $table->string('email')->nullable();
-            $table->string('phone')->nullable();
             $table->string('company')->nullable();
             $table->string('occupation')->nullable();
 

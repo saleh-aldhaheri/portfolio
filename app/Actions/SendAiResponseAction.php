@@ -3,20 +3,26 @@
 namespace App\Actions;
 
 use App\Ai\Agents\ChatAgent;
+use App\Data\ContextMessageData;
 use App\Enums\MessageRole;
 use App\Events\MessageSentEvent;
 use App\Models\Message;
 use App\Models\Visitor;
-use Illuminate\Support\Carbon;
+use App\Services\AiChatContextManagerService;
+use App\Services\ChatSlotsManagerService;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
-use Laravel\Ai\Exceptions\ProviderConnectionException;
-use Laravel\Ai\Exceptions\ProviderOverloadedException;
-use Laravel\Ai\Exceptions\RateLimitedException;
 
 class SendAiResponseAction
 {
+    public function __construct(
+        private readonly ChatAgent $agent,
+        private readonly AiChatContextManagerService $aiChatContextManagerService,
+        private readonly ChatSlotsManagerService $chatSlotsManagerService
+    ) {}
+
     /**
      * @param  Collection<int, Message>  $incomingMessage
      */
@@ -45,16 +51,16 @@ class SendAiResponseAction
         }
 
         if (! $response && $visitor) {
-            $agent = new ChatAgent($visitor);
 
-            if (! $this->checkContextWindow($agent)) {
+            $this->agent->setVisitor($visitor);
+
+            if (! $this->aiChatContextManagerService->IsContextValid($visitor)) {
                 $name = $visitor->name ?? 'there';
                 $response = "Thanks for reaching out, {$name}! We've received your messages and will reply as soon as possible.";
+                $this->chatSlotsManagerService->removeSlot($visitor);
             } else {
 
                 $messages = json_encode($incomingMessage->pluck('message'));
-
-                $agent->rememberLatestMessages($incomingMessage->pluck('message')->all());
 
                 $promptPayload = <<<PROMPT
                 INCOMING MESSAGE LATEST MESSAGES:
@@ -64,7 +70,7 @@ class SendAiResponseAction
             PROMPT;
 
                 try {
-                    $response = $this->promptWithRetry($agent, $promptPayload, $visitor->id);
+                    $response = $this->agent->prompt($promptPayload)->text;
                 } catch (\Throwable $exception) {
                     Log::error('AI chat prompt failed', [
                         'visitor_id' => $visitor->id,
@@ -90,67 +96,42 @@ class SendAiResponseAction
 
         broadcast(new MessageSentEvent($aiMessage));
 
-        $this->updateContext($agent ?? new ChatAgent($visitor), $incomingMessage, $visitor, $response);
+        $this->aiChatContextManagerService->setContext(
+            $visitor, $this->prepareContextData(
+                $incomingMessage,
+                $visitor,
+                $response
+            )
+        );
     }
 
-    /**
-     * Prompt the agent, retrying transient provider errors (rate limits, overloaded, connection) with a short backoff.
-     *
-     * Tool turns make back-to-back provider calls, which can trip rate limits, so a few retries are warranted.
-     */
-    private function promptWithRetry(ChatAgent $agent, string $promptPayload, int $visitorId, int $maxAttempts = 3): string
-    {
-        for ($attempt = 1; $attempt <= $maxAttempts; $attempt++) {
-            try {
-                return $agent->prompt($promptPayload)->text;
-            } catch (RateLimitedException|ProviderOverloadedException|ProviderConnectionException $exception) {
-                if ($attempt === $maxAttempts) {
-                    throw $exception;
-                }
-
-                Log::warning('AI chat provider transient error, retrying', [
-                    'visitor_id' => $visitorId,
-                    'exception' => get_class($exception),
-                    'message' => $exception->getMessage(),
-                    'attempt' => $attempt,
-                ]);
-
-                sleep($attempt * 2);
-            }
-        }
-
-        throw new LogicException('Unreachable.');
-    }
-
-    private function updateContext(
-        ChatAgent $agent,
+    public function prepareContextData(
         Collection $receivedMessages,
         Visitor $visitor,
         string $responseMessage,
-    ): void {
+    ): array {
+        /** @var array<ContextMessageData> $messages */
         $messages = [];
 
         foreach ($receivedMessages as $message) {
-            $messages[] = [
-                'role' => MessageRole::VISITOR->value,
-                'visitor_id' => $message->visitor_id,
-                'name' => $visitor->name ?? 'unknown',
-                'text' => $message->content ?? $message->message,
-                'type' => 'received',
-                'created_at' => $message->created_at?->toISOString() ?? now()->toISOString(),
-            ];
+            $messages[] = new ContextMessageData(
+                role: MessageRole::VISITOR,
+                message: $message->content ?? $message->message ?? '',
+                createdAt: $message->created_at ? Carbon::parse($message->created_at) : Carbon::now(),
+                visitorId: $message->visitor_id ?? $visitor->id,
+                visitorName: $visitor->name ?? 'unknown'
+            );
         }
 
-        $messages[] = [
-            'role' => MessageRole::ASSISTANT->value,
-            'visitor_id' => null,
-            'name' => null,
-            'text' => $responseMessage,
-            'type' => 'sent',
-            'created_at' => now()->toISOString(),
-        ];
+        $messages[] = new ContextMessageData(
+            role: MessageRole::ASSISTANT,
+            message: $responseMessage,
+            createdAt: Carbon::now(),
+            visitorId: null,
+            visitorName: null
+        );
 
-        $agent->setContext($messages);
+        return $messages;
     }
 
     private function isVisitorInCooldown(Visitor $visitor, int $cooldownSec = 5): bool
@@ -160,16 +141,5 @@ class SendAiResponseAction
         $wasSet = Cache::add($key, true, $cooldownSec);
 
         return ! $wasSet;
-    }
-
-    private function checkContextWindow(ChatAgent $agent, int $contextLimitWords = 1000): bool
-    {
-        $context = $agent->getContextSummary();
-
-        if (empty($context)) {
-            return true;
-        }
-
-        return ! ($context['total_words'] > $contextLimitWords && $context['expires_at'] > Carbon::now()->timestamp);
     }
 }

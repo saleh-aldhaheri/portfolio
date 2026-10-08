@@ -20,6 +20,14 @@ class VisitorFactory extends Factory
     {
         return [
             'uuid' => (string) Str::uuid(),
+            'name' => $this->faker->name(),
+            'email' => $this->faker->unique()->safeEmail(),
+            'country' => $this->faker->country(),
+            'city' => $this->faker->city(),
+            'os' => 'mac',
+            'browser' => $this->faker->randomElement(['Chrome', 'Firefox', 'Opera', 'Safari']),
+            'company' => $this->faker->company(),
+            'occupation' => $this->faker->jobTitle(),
         ];
     }
 }
