@@ -14,23 +14,23 @@ class ChatSlotsManagerService
 
         if (isset($activeSlots[$visitor->id])) {
             $activeSlots[$visitor->id]['expired_at'] = Carbon::parse($activeSlots[$visitor->id]['expired_at'])
-                ->addMinutes(5)
+                ->addMinutes((int) config('services.ai_chat_slot.extended_tt'))
                 ->toIso8601String();
 
-            Cache::put($this->key(), $activeSlots, now()->addMinutes(60));
+            Cache::put($this->key(), $activeSlots, now()->addMinutes(config('services.ai_chat_slot.slot_list_ttl')));
 
             return true;
         }
 
-        if (count($activeSlots) >= 10) {
+        if (count($activeSlots) >= (int) config('services.ai_chat_slot.connection_limit')) {
             return false;
         }
 
         $activeSlots[$visitor->id] = [
-            'expired_at' => now()->addMinutes(30)->toIso8601String(),
+            'expired_at' => now()->addMinutes((int) config('services.ai_chat_slot.ttl'))->toIso8601String(),
         ];
 
-        Cache::put($this->key(), $activeSlots, now()->addMinutes(60));
+        Cache::put($this->key(), $activeSlots, now()->addMinutes((int) config('services.ai_chat_slot.slot_list_ttl')));
 
         return true;
     }
@@ -41,7 +41,7 @@ class ChatSlotsManagerService
 
         if (isset($chatStack[$visitor->id])) {
             unset($chatStack[$visitor->id]);
-            Cache::put($this->key(), $chatStack, now()->addMinutes(60));
+            Cache::put($this->key(), $chatStack, now()->addMinutes((int) config('services.ai_chat_slot.slot_list_ttl')));
         }
     }
 
@@ -53,7 +53,7 @@ class ChatSlotsManagerService
             return isset($chat['expired_at']) && Carbon::parse($chat['expired_at'])->isFuture();
         });
 
-        Cache::put($this->key(), $activeSlots, now()->addMinutes(60));
+        Cache::put($this->key(), $activeSlots, now()->addMinutes((int) config('services.ai_chat_slot.slot_list_ttl')));
 
         return $activeSlots;
     }
