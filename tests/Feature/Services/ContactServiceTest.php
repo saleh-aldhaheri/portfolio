@@ -121,10 +121,10 @@ describe('store', function () {
         $message = $this->service->store($payload);
 
         expect($message)->toBeInstanceOf(ContactMessage::class)
-            ->and($message->name)->toBe('Saleh')
-            ->and($message->email)->toBe('confirmed@example.test')
             ->and($message->message)->toBe('I would like to work with you')
             ->and($message->visitor_id)->toBe($this->visitor->id)
+            ->and($message->visitor->name)->toBe($this->visitor->name)
+            ->and($message->visitor->email)->toBe($this->visitor->email)
             ->and(ContactMessage::count())->toBe(1);
     });
 });

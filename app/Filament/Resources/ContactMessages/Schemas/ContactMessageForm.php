@@ -4,7 +4,6 @@ namespace App\Filament\Resources\ContactMessages\Schemas;
 
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
 class ContactMessageForm
@@ -13,12 +12,6 @@ class ContactMessageForm
     {
         return $schema
             ->components([
-                TextInput::make('name')
-                    ->maxLength(255),
-                TextInput::make('email')
-                    ->label('Email address')
-                    ->email()
-                    ->required(),
                 Select::make('visitor_id')
                     ->label('Visitor')
                     ->relationship('visitor', 'email')

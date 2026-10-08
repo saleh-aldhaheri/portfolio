@@ -16,19 +16,17 @@ class ContactMessagesTable
         return $table
             ->defaultSort('created_at', 'desc')
             ->columns([
-                TextColumn::make('name')
+                TextColumn::make('visitor.name')
+                    ->label('Name')
                     ->searchable()
                     ->placeholder('-'),
-                TextColumn::make('email')
+                TextColumn::make('visitor.email')
+                    ->label('Email')
                     ->searchable()
                     ->placeholder('-'),
                 TextColumn::make('message')
                     ->limit(60)
                     ->wrap(),
-                TextColumn::make('visitor.email')
-                    ->label('Visitor')
-                    ->searchable()
-                    ->placeholder('-'),
                 TextColumn::make('created_at')
                     ->since()
                     ->sortable(),

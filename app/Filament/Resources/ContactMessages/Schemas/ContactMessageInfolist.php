@@ -15,11 +15,6 @@ class ContactMessageInfolist
                 Section::make('Message')
                     ->description('Submitted via the contact form')
                     ->schema([
-                        TextEntry::make('name')
-                            ->placeholder('-'),
-                        TextEntry::make('email')
-                            ->copyable()
-                            ->placeholder('-'),
                         TextEntry::make('message')
                             ->prose()
                             ->columnSpanFull(),
@@ -27,6 +22,13 @@ class ContactMessageInfolist
                 Section::make('Visitor')
                     ->description('Who submitted the message')
                     ->schema([
+                        TextEntry::make('visitor.name')
+                            ->label('Name')
+                            ->placeholder('-'),
+                        TextEntry::make('visitor.email')
+                            ->label('Email')
+                            ->copyable()
+                            ->placeholder('-'),
                         TextEntry::make('visitor.uuid')
                             ->label('UUID')
                             ->copyable()

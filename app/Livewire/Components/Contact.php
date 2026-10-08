@@ -84,6 +84,7 @@ class Contact extends Component
         if ($visitor) {
             $visitor->update(array_filter([
                 'email' => $visitor->email === null ? $payload['verified_email'] : null,
+                'name' => $payload['name'] ?? null,
                 'phone' => $payload['phone'] ?? null,
                 'company' => $payload['company'] ?? null,
             ], fn ($value): bool => $value !== null));

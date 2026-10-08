@@ -27,7 +27,7 @@ class VisitorFactory extends Factory
             'os' => 'mac',
             'browser' => $this->faker->randomElement(['Chrome', 'Firefox', 'Opera', 'Safari']),
             'company' => $this->faker->company(),
-            'occupation' => $this->faker->jobTitle(),
+            'phone' => $this->faker->phoneNumber(),
         ];
     }
 }
