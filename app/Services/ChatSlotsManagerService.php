@@ -17,7 +17,7 @@ class ChatSlotsManagerService
                 ->addMinutes((int) config('services.ai_chat_slot.extended_tt'))
                 ->toIso8601String();
 
-            Cache::put($this->key(), $activeSlots, now()->addMinutes(config('services.ai_chat_slot.slot_list_ttl')));
+            Cache::put($this->key(), $activeSlots, now()->addMinutes((int) config('services.ai_chat_slot.slot_list_ttl')));
 
             return true;
         }

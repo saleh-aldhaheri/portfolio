@@ -164,7 +164,7 @@ describe('get context', function () {
 describe('get context summary', function () {
     it('should return context summary with correct word count, character count, and expiration date', function () {
 
-        $expiredAt = new DateTime('2026-10-08 11:00:00');
+        $expiredAt = Carbon::now()->addMinutes(60);
 
         $messages = [
             new ContextMessageData(
