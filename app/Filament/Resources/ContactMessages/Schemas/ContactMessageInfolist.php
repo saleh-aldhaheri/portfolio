@@ -12,13 +12,6 @@ class ContactMessageInfolist
     {
         return $schema
             ->components([
-                Section::make('Message')
-                    ->description('Submitted via the contact form')
-                    ->schema([
-                        TextEntry::make('message')
-                            ->prose()
-                            ->columnSpanFull(),
-                    ]),
                 Section::make('Visitor')
                     ->description('Who submitted the message')
                     ->schema([
@@ -48,13 +41,21 @@ class ContactMessageInfolist
                             ->columnSpanFull(),
                     ])
                     ->columns(3),
+                Section::make('Message')
+                    ->description('Submitted via the contact form')
+                    ->schema([
+                        TextEntry::make('message')
+                            ->prose()
+                            ->columnSpanFull(),
+                    ]),
                 Section::make('Timestamps')
                     ->schema([
                         TextEntry::make('created_at')
                             ->dateTime(),
                         TextEntry::make('updated_at')
                             ->dateTime(),
-                    ]),
-            ]);
+                    ])->columns(2),
+            ])
+            ->columns(1);
     }
 }

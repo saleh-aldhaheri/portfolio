@@ -14,6 +14,24 @@ class ConversationInfolist
     {
         return $schema
             ->components([
+                Section::make('Conversation statistics')
+                    ->schema([
+                        TextEntry::make('messages_count')
+                            ->label('Total messages')
+                            ->state(fn (Visitor $record): int => $record->messages()->count())
+                            ->numeric(),
+                        TextEntry::make('first_message_at')
+                            ->label('First message')
+                            ->placeholder('-')
+                            ->dateTime()
+                            ->state(fn (Visitor $record): ?string => $record->messages()->min('created_at')),
+                        TextEntry::make('last_message_at')
+                            ->label('Last message')
+                            ->placeholder('-')
+                            ->dateTime()
+                            ->state(fn (Visitor $record): ?string => $record->messages()->max('created_at')),
+                    ])
+                    ->columns(3),
                 Section::make('Visitor')
                     ->description('Basic information collected from this visitor')
                     ->schema([
@@ -44,24 +62,6 @@ class ConversationInfolist
                             ->columnSpanFull(),
                     ])
                     ->columns(3),
-                Section::make('Conversation statistics')
-                    ->schema([
-                        TextEntry::make('messages_count')
-                            ->label('Total messages')
-                            ->state(fn (Visitor $record): int => $record->messages()->count())
-                            ->numeric(),
-                        TextEntry::make('first_message_at')
-                            ->label('First message')
-                            ->placeholder('-')
-                            ->dateTime()
-                            ->state(fn (Visitor $record): ?string => $record->messages()->min('created_at')),
-                        TextEntry::make('last_message_at')
-                            ->label('Last message')
-                            ->placeholder('-')
-                            ->dateTime()
-                            ->state(fn (Visitor $record): ?string => $record->messages()->max('created_at')),
-                    ])
-                    ->columns(3),
                 Section::make('Conversation')
                     ->description('Scroll to the top of the conversation to load older messages')
                     ->schema([
@@ -71,6 +71,7 @@ class ConversationInfolist
                         )
                             ->columnSpanFull(),
                     ]),
-            ]);
+            ])
+            ->columns(1);
     }
 }

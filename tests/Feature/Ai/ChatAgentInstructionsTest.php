@@ -1,8 +1,17 @@
 <?php
 
+use App\Ai\Agents\ChatAgent;
+use App\Models\Visitor;
+
+beforeEach(function () {
+    $this->agent = app(ChatAgent::class);
+    $this->agent->setVisitor(Visitor::factory()->create());
+
+});
+
 describe('ChatAgent instructions', function () {
     it('tells the assistant to reintroduce itself instead of refusing', function () {
-        $instructions = agentInstructions();
+        $instructions = $this->agent->instructions();
 
         expect($instructions)
             ->toContain("you are Saleh's assistant")
@@ -11,7 +20,7 @@ describe('ChatAgent instructions', function () {
     });
 
     it('no longer mandates the refusal phrase', function () {
-        expect(agentInstructions())
+        expect($this->agent->instructions())
             ->not->toContain('politely answer "this is not my job."')
             ->not->toContain('or the ./Contact section of the page');
     });

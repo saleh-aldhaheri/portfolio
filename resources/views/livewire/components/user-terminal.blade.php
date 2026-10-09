@@ -21,7 +21,9 @@
                        @keydown.arrow-up.prevent="$wire.historyUp().then(() => { $el.value = $wire.input; })"
                        @keydown.arrow-down.prevent="$wire.historyDown().then(() => { $el.value = $wire.input; })"
                        wire:model="input" maxlength="40" name="input"
-                       autocomplete="off" spellcheck="false" aria-describedby="command-error">
+                       autocomplete="off" spellcheck="false" aria-describedby="command-error"
+                       placeholder='Type "Help" To View All The Commands'
+                >
             </div>
         </div>
 

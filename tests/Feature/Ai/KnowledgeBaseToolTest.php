@@ -11,11 +11,6 @@ function knowledgeTool(): KnowledgeBaseTool
     return new KnowledgeBaseTool;
 }
 
-function knowledgeTree(): array
-{
-    return require resource_path('data/knowledge.php');
-}
-
 function agentInstructions(): string
 {
     $agent = new ChatAgent(new AiChatContextManagerService);
