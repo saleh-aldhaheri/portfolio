@@ -204,7 +204,7 @@ $k                   $F
                 'image' => 'images/projects/portfolio.webp',
                 'info' => 'A command-style developer portfolio built with Laravel and Livewire, featuring an interactive terminal-inspired interface.',
                 'github' => 'https://github.com/saleh-aldhaheri/portfolio',
-                'link' => null,
+                'link' => 'https://saleh-ahamed.pro',
             ],
             'blog-system' => [
                 'name' => 'Blog System',
