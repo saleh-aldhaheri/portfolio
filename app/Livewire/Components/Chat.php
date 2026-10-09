@@ -25,6 +25,8 @@ class Chat extends Component
 
     public bool $hasMoreMessages = true;
 
+    private bool $visitorResolvedOnMount = false;
+
     public function mount(): void
     {
         $uuid = request()->cookie('visitor');
@@ -34,6 +36,7 @@ class Chat extends Component
             : null;
 
         if ($this->visitor !== null) {
+            $this->visitorResolvedOnMount = true;
             $this->refreshMessages();
             $this->refreshHasMoreMessages();
         }
@@ -66,6 +69,13 @@ class Chat extends Component
             ]);
         }
 
+        // Only needed when this page session had no visitor yet: the browser
+        // could not subscribe to the Echo channel at mount, so hand it the uuid.
+        if (! $this->visitorResolvedOnMount) {
+            $this->dispatch('visitor-ready', uuid: $this->visitor->uuid);
+            $this->visitorResolvedOnMount = true;
+        }
+
         $this->dispatch('log-activity', 'chat-message-submitted');
         $this->dispatch('chat-scroll', force: true);
     }
@@ -88,6 +98,7 @@ class Chat extends Component
             'message' => (string) ($message['message'] ?? ''),
         ]);
 
+        $this->dispatch('chat-received', id: (int) ($message['id'] ?? 0));
         $this->dispatch('chat-scroll');
     }
 
@@ -114,6 +125,27 @@ class Chat extends Component
         }
 
         $this->refreshHasMoreMessages();
+    }
+
+    public function receivePendingReply(): void
+    {
+        if ($this->visitor === null) {
+            return;
+        }
+
+        $latestMessage = $this->visitor->messages()
+            ->latest('id')
+            ->first();
+
+        if ($latestMessage !== null && $latestMessage->role === MessageRole::ASSISTANT) {
+            $lastVisibleId = $this->messages[count($this->messages) - 1]['id'] ?? 0;
+
+            if ($latestMessage->id > $lastVisibleId) {
+                $this->pushMessage($this->formatMessage($latestMessage));
+                $this->dispatch('chat-received', id: $latestMessage->id);
+                $this->dispatch('chat-scroll');
+            }
+        }
     }
 
     private function pushMessage(array $message): void
