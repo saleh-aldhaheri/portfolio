@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Visitor;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends Factory<Visitor>
@@ -18,7 +19,15 @@ class VisitorFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'uuid' => (string) Str::uuid(),
+            'name' => $this->faker->name(),
+            'email' => $this->faker->unique()->safeEmail(),
+            'country' => $this->faker->country(),
+            'city' => $this->faker->city(),
+            'os' => 'mac',
+            'browser' => $this->faker->randomElement(['Chrome', 'Firefox', 'Opera', 'Safari']),
+            'company' => $this->faker->company(),
+            'phone' => $this->faker->phoneNumber(),
         ];
     }
 }

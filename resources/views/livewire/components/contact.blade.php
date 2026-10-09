@@ -127,7 +127,7 @@
 
                     {{-- name --}}
                     <div>
-                        <label for="name" class="mb-2 block text-sm font-bold text-primary">$ name</label>
+                        <label for="name" class="mb-2 block text-sm font-bold text-primary">$ name <span class="font-normal text-muted">(required)</span></label>
                         <div class="group flex items-center gap-3 rounded border px-4 transition-colors focus-within:border-primary @error('name') @enderror">
                             <span aria-hidden="true" class="group-focus-within:text-primary @error('name') @enderror">&gt;</span>
                             <input type="text" id="name" wire:model="name"
@@ -141,9 +141,9 @@
 
                     {{-- email --}}
                     <div>
-                        <label for="email" class="mb-2 block text-sm font-bold text-primary">$ email</label>
-                        <div class="group flex items-center gap-3 rounded border px-4 transition-colors focus-within:border-primary @error('email') @enderror">
-                            <span aria-hidden="true" class="group-focus-within:text-primary @error('email') @enderror">&gt;</span>
+                        <label for="email" class="mb-2 block text-sm font-bold text-primary">$ email <span class="font-normal text-muted">(required)</span></label>
+                        <div class="group flex items-center gap-3 rounded border px-4 transition-colors focus-within:border-primary @error('email') border-error @enderror">
+                            <span aria-hidden="true" class="group-focus-within:text-primary @error('email') text-error @enderror">&gt;</span>
                             <input type="email" id="email" wire:model="email"
                                    class="w-full bg-transparent py-3 outline-none placeholder:text-muted/60"
                                    placeholder="you@example.com" maxlength="255" autocomplete="email"
@@ -151,6 +151,34 @@
                                    aria-describedby="email-error">
                         </div>
                         @error('email') <p id="email-error" role="alert" class="mt-2 text-sm text-error">error: {{ $message }}</p> @enderror
+                    </div>
+
+                    {{-- phone (optional) --}}
+                    <div>
+                        <label for="phone" class="mb-2 block text-sm font-bold text-primary">$ phone <span class="font-normal text-muted">(optional)</span></label>
+                        <div class="group flex items-center gap-3 rounded border px-4 transition-colors focus-within:border-primary @error('phone') border-error @enderror">
+                            <span aria-hidden="true" class="group-focus-within:text-primary @error('phone') text-error @enderror">&gt;</span>
+                            <input type="tel" id="phone" wire:model="phone"
+                                   class="w-full bg-transparent py-3 outline-none placeholder:text-muted/60"
+                                   placeholder="+60123456789" maxlength="30" autocomplete="tel"
+                                   aria-invalid="{{ $errors->has('phone') ? 'true' : 'false' }}"
+                                   aria-describedby="phone-error">
+                        </div>
+                        @error('phone') <p id="phone-error" role="alert" class="mt-2 text-sm text-error">error: {{ $message }}</p> @enderror
+                    </div>
+
+                    {{-- company (optional) --}}
+                    <div>
+                        <label for="company" class="mb-2 block text-sm font-bold text-primary">$ company <span class="font-normal text-muted">(optional)</span></label>
+                        <div class="group flex items-center gap-3 rounded border px-4 transition-colors focus-within:border-primary @error('company') border-error @enderror">
+                            <span aria-hidden="true" class="group-focus-within:text-primary @error('company') text-error @enderror">&gt;</span>
+                            <input type="text" id="company" wire:model="company"
+                                   class="w-full bg-transparent py-3 outline-none placeholder:text-muted/60"
+                                   placeholder="Company (or team)" maxlength="255" autocomplete="organization"
+                                   aria-invalid="{{ $errors->has('company') ? 'true' : 'false' }}"
+                                   aria-describedby="company-error">
+                        </div>
+                        @error('company') <p id="company-error" role="alert" class="mt-2 text-sm text-error">error: {{ $message }}</p> @enderror
                     </div>
 
                     {{-- message (grows to fill the card) --}}

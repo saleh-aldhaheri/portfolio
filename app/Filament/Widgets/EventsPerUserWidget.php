@@ -12,7 +12,7 @@ class EventsPerUserWidget extends TableWidget
 {
     use InteractsWithPageFilters;
 
-    protected static ?int $sort = 5;
+    protected static ?int $sort = 6;
 
     protected int|string|array $columnSpan = 'full';
 

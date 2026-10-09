@@ -12,7 +12,7 @@ class FormsPerUserWidget extends TableWidget
 {
     use InteractsWithPageFilters;
 
-    protected static ?int $sort = 7;
+    protected static ?int $sort = 8;
 
     protected int|string|array $columnSpan = 'full';
 

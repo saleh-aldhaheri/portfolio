@@ -24,6 +24,9 @@ class AnalyticsOverviewWidget extends StatsOverviewWidget
             Stat::make('Visitors', $overview['visitors'])
                 ->description('Unique visitors')
                 ->icon(Heroicon::OutlinedUsers),
+            Stat::make('Messages', $overview['messages'])
+                ->description('AI chat messages')
+                ->icon(Heroicon::OutlinedChatBubbleLeftRight),
             Stat::make('Contact messages', $overview['contact_messages'])
                 ->description('Forms submitted')
                 ->icon(Heroicon::OutlinedEnvelope),

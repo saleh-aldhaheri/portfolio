@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Pages;
 
-use App\Models\Visitor;
+use App\Services\VisitorService;
 use Illuminate\View\View;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -17,15 +17,9 @@ class Home extends Component
     #[On('log-activity')]
     public function logActivity(string $event): void
     {
-        $uuid = request()->cookie('visitor');
+        $visitor = app(VisitorService::class)->resolve(request());
 
-        if (! $uuid) {
-            return;
-        }
-
-        $visitor = Visitor::where('uuid', $uuid)->first();
-
-        $visitor?->logs()->create([
+        $visitor->logs()->create([
             'event' => $event,
         ]);
     }

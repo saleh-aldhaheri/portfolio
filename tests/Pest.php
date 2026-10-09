@@ -44,7 +44,10 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+/**
+ * @return array<string, mixed>
+ */
+function knowledgeTree(): array
 {
-    // ..
+    return require resource_path('data/knowledge.php');
 }

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\AnalyticsLog;
 use App\Models\ContactMessage;
+use App\Models\Message;
 use App\Models\Visitor;
 use Closure;
 use Illuminate\Database\Eloquent\Builder;
@@ -30,7 +31,7 @@ class AnalyticsService
     public const DEFAULT_PERIOD = 'month';
 
     /**
-     * @return array{visitors: int, contact_messages: int, events: int}
+     * @return array{visitors: int, contact_messages: int, events: int, messages: int}
      */
     public static function overview(?string $period = null): array
     {
@@ -39,6 +40,7 @@ class AnalyticsService
                 'visitors' => self::scoped(Visitor::query(), $period)->count(),
                 'contact_messages' => self::scoped(ContactMessage::query(), $period)->count(),
                 'events' => self::scoped(AnalyticsLog::query(), $period)->count(),
+                'messages' => self::scoped(Message::query(), $period)->count(),
             ];
         });
     }
@@ -75,6 +77,29 @@ class AnalyticsService
                 ->limit(10)
                 ->get()
                 ->map(fn ($row): array => ['name' => $row->city, 'total' => (int) $row->total])
+                ->all();
+        });
+    }
+
+    /**
+     * @return array<int, array{name: string, total: int}>
+     */
+    public static function messagesByCountry(?string $period = null): array
+    {
+        return self::cached('messages_by_country', $period, function (string $period): array {
+            [$start, $end] = self::range($period);
+
+            return Message::query()
+                ->join('visitors', 'visitors.id', '=', 'messages.visitor_id')
+                ->select('visitors.country', DB::raw('COUNT(*) as total'))
+                ->whereNotNull('visitors.country')
+                ->when($start, fn (Builder $query): Builder => $query->where('messages.created_at', '>=', $start))
+                ->when($end, fn (Builder $query): Builder => $query->where('messages.created_at', '<=', $end))
+                ->groupBy('visitors.country')
+                ->orderByDesc('total')
+                ->limit(10)
+                ->get()
+                ->map(fn ($row): array => ['name' => $row->country, 'total' => (int) $row->total])
                 ->all();
         });
     }

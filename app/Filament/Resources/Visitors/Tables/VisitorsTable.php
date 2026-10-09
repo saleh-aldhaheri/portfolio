@@ -62,9 +62,6 @@ class VisitorsTable
                 SelectFilter::make('os')
                     ->options(fn (): array => Visitor::query()->distinct()->pluck('os', 'os')->filter()->sort()->all())
                     ->searchable(),
-                SelectFilter::make('language')
-                    ->options(fn (): array => Visitor::query()->distinct()->pluck('language', 'language')->filter()->sort()->all())
-                    ->searchable(),
                 TernaryFilter::make('has_email')
                     ->label('Email status')
                     ->placeholder('All visitors')

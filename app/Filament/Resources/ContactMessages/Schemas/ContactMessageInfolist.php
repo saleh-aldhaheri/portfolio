@@ -12,21 +12,16 @@ class ContactMessageInfolist
     {
         return $schema
             ->components([
-                Section::make('Message')
-                    ->description('Submitted via the contact form')
-                    ->schema([
-                        TextEntry::make('name')
-                            ->placeholder('-'),
-                        TextEntry::make('email')
-                            ->copyable()
-                            ->placeholder('-'),
-                        TextEntry::make('message')
-                            ->prose()
-                            ->columnSpanFull(),
-                    ]),
                 Section::make('Visitor')
                     ->description('Who submitted the message')
                     ->schema([
+                        TextEntry::make('visitor.name')
+                            ->label('Name')
+                            ->placeholder('-'),
+                        TextEntry::make('visitor.email')
+                            ->label('Email')
+                            ->copyable()
+                            ->placeholder('-'),
                         TextEntry::make('visitor.uuid')
                             ->label('UUID')
                             ->copyable()
@@ -46,13 +41,21 @@ class ContactMessageInfolist
                             ->columnSpanFull(),
                     ])
                     ->columns(3),
+                Section::make('Message')
+                    ->description('Submitted via the contact form')
+                    ->schema([
+                        TextEntry::make('message')
+                            ->prose()
+                            ->columnSpanFull(),
+                    ]),
                 Section::make('Timestamps')
                     ->schema([
                         TextEntry::make('created_at')
                             ->dateTime(),
                         TextEntry::make('updated_at')
                             ->dateTime(),
-                    ]),
-            ]);
+                    ])->columns(2),
+            ])
+            ->columns(1);
     }
 }

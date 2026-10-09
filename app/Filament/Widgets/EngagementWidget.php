@@ -10,7 +10,7 @@ class EngagementWidget extends ChartWidget
 {
     use InteractsWithPageFilters;
 
-    protected static ?int $sort = 3;
+    protected static ?int $sort = 4;
 
     protected int|string|array $columnSpan = 1;
 

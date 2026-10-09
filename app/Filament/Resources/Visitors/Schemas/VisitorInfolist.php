@@ -2,10 +2,12 @@
 
 namespace App\Filament\Resources\Visitors\Schemas;
 
-use Filament\Infolists\Components\RepeatableEntry;
+use App\Enums\MessageRole;
+use App\Models\Visitor;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Illuminate\Support\Facades\DB;
 
 class VisitorInfolist
 {
@@ -13,6 +15,36 @@ class VisitorInfolist
     {
         return $schema
             ->components([
+                Section::make('Activity')
+                    ->description('What this visitor has done on the site')
+                    ->schema([
+                        TextEntry::make('contact_messages_count')
+                            ->label('Contact messages sent')
+                            ->state(fn (Visitor $record): int => $record->contactMessages()->count())
+                            ->numeric(),
+                        TextEntry::make('ai_messages_count')
+                            ->label('Messages sent to the AI')
+                            ->state(fn (Visitor $record): int => $record->messages()->where('role', MessageRole::VISITOR)->count())
+                            ->numeric(),
+                        TextEntry::make('events_count')
+                            ->label('Events tracked')
+                            ->state(fn (Visitor $record): int => $record->logs()->count())
+                            ->numeric(),
+                        TextEntry::make('top_event')
+                            ->label('Most frequent event')
+                            ->placeholder('No events yet')
+                            ->state(function (Visitor $record): ?string {
+                                $top = $record->logs()
+                                    ->select('event', DB::raw('COUNT(*) as total'))
+                                    ->groupBy('event')
+                                    ->orderByDesc('total')
+                                    ->orderBy('event')
+                                    ->first();
+
+                                return $top === null ? null : "{$top->event} ({$top->total})";
+                            }),
+                    ])
+                    ->columns(4),
                 Section::make('Identity')
                     ->description('Collected when the visitor interacted with the site')
                     ->schema([
@@ -25,11 +57,6 @@ class VisitorInfolist
                         TextEntry::make('phone')
                             ->placeholder('-'),
                         TextEntry::make('company')
-                            ->placeholder('-'),
-                        TextEntry::make('occupation')
-                            ->placeholder('-'),
-                        TextEntry::make('user_id')
-                            ->numeric()
                             ->placeholder('-'),
                     ])
                     ->columns(3),
@@ -48,42 +75,20 @@ class VisitorInfolist
                             ->placeholder('-'),
                         TextEntry::make('os')
                             ->placeholder('-'),
-                        TextEntry::make('language')
-                            ->placeholder('-'),
                         TextEntry::make('browser')
-                            ->placeholder('-')
-                            ->columnSpanFull(),
-                        TextEntry::make('referrer')
-                            ->url(fn (?string $state): ?string => $state)
                             ->placeholder('-')
                             ->columnSpanFull(),
                     ])
                     ->columns(3),
-                Section::make('Messages')
-                    ->description('Contact messages sent by this visitor')
-                    ->schema([
-                        RepeatableEntry::make('contactMessages')
-                            ->schema([
-                                TextEntry::make('name')
-                                    ->placeholder('-'),
-                                TextEntry::make('email')
-                                    ->placeholder('-'),
-                                TextEntry::make('created_at')
-                                    ->since(),
-                                TextEntry::make('message')
-                                    ->prose()
-                                    ->columnSpanFull(),
-                            ])
-                            ->columns(3)
-                            ->columnSpanFull(),
-                    ]),
                 Section::make('Timestamps')
                     ->schema([
                         TextEntry::make('created_at')
                             ->dateTime(),
                         TextEntry::make('updated_at')
                             ->dateTime(),
-                    ]),
-            ]);
+                    ])
+                    ->columns(2),
+            ])
+            ->columns(1);
     }
 }
