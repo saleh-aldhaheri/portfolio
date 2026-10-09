@@ -4,7 +4,7 @@ name: portfolio
 # The pipeline builds and pushes the image to Docker Hub, then runs `pull && down && up -d` here.
 
 x-app: &app
-  image: ${DOCKER_USERNAME}/portfolio:production
+  image: salehaldhaheri1010/portfolio:production
   env_file:
     - .env
   volumes:
