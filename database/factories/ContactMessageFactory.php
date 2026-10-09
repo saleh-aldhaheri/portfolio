@@ -20,8 +20,6 @@ class ContactMessageFactory extends Factory
     {
         return [
             'visitor_id' => Visitor::factory(),
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
             'message' => fake()->paragraph(),
         ];
     }

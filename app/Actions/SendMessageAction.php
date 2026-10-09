@@ -5,13 +5,13 @@ namespace App\Actions;
 use App\Enums\MessageRole;
 use App\Models\Message;
 use App\Models\Visitor;
-use App\Services\ChatSlotsManager;
+use App\Services\ChatSlotsManagerService;
 
 class SendMessageAction
 {
     public function execute(Visitor $visitor, string $message): ?Message
     {
-        if (! app(ChatSlotsManager::class)->addSlot($visitor)) {
+        if (! app(ChatSlotsManagerService::class)->addSlot($visitor)) {
             return Message::create([
                 'visitor_id' => $visitor->id,
                 'role' => MessageRole::ASSISTANT,

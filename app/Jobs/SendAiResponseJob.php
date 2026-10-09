@@ -23,6 +23,6 @@ class SendAiResponseJob implements ShouldQueue
      */
     public function handle(): void
     {
-        (new SendAiResponseAction)->execute($this->incomingMessages);
+        app(SendAiResponseAction::class)->execute($this->incomingMessages);
     }
 }

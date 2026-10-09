@@ -71,14 +71,12 @@ class ContactService
     }
 
     /**
-     * @param  array{visitor_id: int, name: string, verified_email: string, message: string}  $payload
+     * @param  array{visitor_id: int, message: string}  $payload
      */
     public function store(array $payload): ContactMessage
     {
         return ContactMessage::create([
             'visitor_id' => $payload['visitor_id'],
-            'name' => $payload['name'],
-            'email' => $payload['verified_email'],
             'message' => $payload['message'],
         ]);
     }

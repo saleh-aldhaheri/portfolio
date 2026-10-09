@@ -34,4 +34,16 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+
+    'ai_chat_context' => [
+        'ttl' => env('AI_CHAT_CONTEXT_WINDOW_TTL', 30),
+        'word_limit' => env('AI_CHAT_CONTEXT_WORD_LIMIT', 500),
+    ],
+
+    'ai_chat_slot' => [
+        'ttl' => env('AI_CHAT_SLOT_TTL', 30),
+        'slot_list_ttl' => env('AI_CHAT_SLOT_LIST_TTL', 60),
+        'extended_tt' => env('AI_CHAT_SLOT_EXTENDED_TTL', 5),
+        'connection_limit' => env('AI_CHAT_SLOT_CONNECTION_LIMIT', 10),
+    ],
 ];

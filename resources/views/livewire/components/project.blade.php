@@ -27,7 +27,11 @@
                 @continue
             @endif
 
-            <article class="group overflow-hidden rounded-lg border transition-colors hover:border-primary focus-within:border-primary">
+            <article class="group overflow-hidden rounded-lg border bg-surface
+              transition-all ease-in-out
+              hover:border-primary hover:-translate-y-0.5 hover:text-primary
+              focus-within:border-primary focus-within:text-primary
+             ">
 
                 <div class="flex items-center gap-1.5 border-b px-3 py-2 text-xs">
                     <span class="size-2 rounded-full  bg-error"></span>
@@ -49,16 +53,18 @@
                              class="absolute inset-0 size-full object-cover">
                     </div>
 
-                    <h3 class="mb-1 mt-3 text-outputText group-hover:before:text-primary group-hover:before:content-['>_']">
+                    <h3 class="mb-1 mt-3 text-outputText transition-colors group-hover:text-primary">
                         {{ $project['name'] }}
                     </h3>
-
+                    <p class="text-sm italic my-2">
+                        {{$project['info']}}
+                    </p>
                     <ul class="flex flex-wrap gap-x-4 gap-y-1 text-xs">
                         @if(filled($project['link'] ?? null))
                             <li>
                                 <a href="{{ $project['link'] }}" target="_blank" rel="noopener noreferrer"
                                    aria-label="Open live site of {{ $project['name'] }} (new tab)"
-                                   class="hover:text-primary focus-visible:text-primary">link →</a>
+                                   class="focus-visible:text-primary">link →</a>
                             </li>
                         @endif
                         @if(filled($project['github'] ?? null))

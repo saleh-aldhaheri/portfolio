@@ -6,7 +6,7 @@ use App\Models\Visitor;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 
-class ChatSlotsManager
+class ChatSlotsManagerService
 {
     public function addSlot(Visitor $visitor): bool
     {
@@ -14,34 +14,34 @@ class ChatSlotsManager
 
         if (isset($activeSlots[$visitor->id])) {
             $activeSlots[$visitor->id]['expired_at'] = Carbon::parse($activeSlots[$visitor->id]['expired_at'])
-                ->addMinutes(5)
+                ->addMinutes((int) config('services.ai_chat_slot.extended_tt'))
                 ->toIso8601String();
 
-            Cache::put($this->key(), $activeSlots, now()->addMinutes(60));
+            Cache::put($this->key(), $activeSlots, now()->addMinutes((int) config('services.ai_chat_slot.slot_list_ttl')));
 
             return true;
         }
 
-        if (count($activeSlots) >= 10) {
+        if (count($activeSlots) >= (int) config('services.ai_chat_slot.connection_limit')) {
             return false;
         }
 
         $activeSlots[$visitor->id] = [
-            'expired_at' => now()->addMinutes(30)->toIso8601String(),
+            'expired_at' => now()->addMinutes((int) config('services.ai_chat_slot.ttl'))->toIso8601String(),
         ];
 
-        Cache::put($this->key(), $activeSlots, now()->addMinutes(60));
+        Cache::put($this->key(), $activeSlots, now()->addMinutes((int) config('services.ai_chat_slot.slot_list_ttl')));
 
         return true;
     }
 
-    public function removeSlot(int $visitorId): void
+    public function removeSlot(Visitor $visitor): void
     {
         $chatStack = Cache::get($this->key(), []);
 
-        if (isset($chatStack[$visitorId])) {
-            unset($chatStack[$visitorId]);
-            Cache::put($this->key(), $chatStack, now()->addMinutes(60));
+        if (isset($chatStack[$visitor->id])) {
+            unset($chatStack[$visitor->id]);
+            Cache::put($this->key(), $chatStack, now()->addMinutes((int) config('services.ai_chat_slot.slot_list_ttl')));
         }
     }
 
@@ -53,7 +53,7 @@ class ChatSlotsManager
             return isset($chat['expired_at']) && Carbon::parse($chat['expired_at'])->isFuture();
         });
 
-        Cache::put($this->key(), $activeSlots, now()->addMinutes(60));
+        Cache::put($this->key(), $activeSlots, now()->addMinutes((int) config('services.ai_chat_slot.slot_list_ttl')));
 
         return $activeSlots;
     }
