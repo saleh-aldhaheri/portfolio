@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Visitors;
 use App\Filament\Resources\Visitors\Pages\ListVisitors;
 use App\Filament\Resources\Visitors\Pages\ViewVisitor;
 use App\Filament\Resources\Visitors\RelationManagers\ContactMessagesRelationManager;
+use App\Filament\Resources\Visitors\RelationManagers\EventsRelationManager;
 use App\Filament\Resources\Visitors\Schemas\VisitorForm;
 use App\Filament\Resources\Visitors\Schemas\VisitorInfolist;
 use App\Filament\Resources\Visitors\Tables\VisitorsTable;
@@ -40,6 +41,7 @@ class VisitorResource extends Resource
     {
         return [
             ContactMessagesRelationManager::class,
+            EventsRelationManager::class,
         ];
     }
 
