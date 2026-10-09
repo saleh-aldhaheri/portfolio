@@ -58,6 +58,8 @@ class Contact extends Component
 
         $this->otpToken = $issued['token'];
         $this->requireOtp = true;
+
+        $this->dispatch('log-activity', 'contact-message-submitted');
     }
 
     public function resend(): void

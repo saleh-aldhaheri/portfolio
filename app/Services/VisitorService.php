@@ -15,26 +15,30 @@ class VisitorService
      */
     public function resolve(Request $request): Visitor
     {
+        if ($visitor = $request->attributes->get('_resolved_visitor')) {
+            return $visitor;
+        }
+
         $uuid = $request->cookie('visitor');
 
         if ($uuid && $visitor = Visitor::where('uuid', $uuid)->first()) {
             $visitor->update([
                 'ip_address' => $request->header('CF-Connecting-IP') ?? $request->ip(),
             ]);
+        } else {
+            $visitor = Visitor::create([
+                'uuid' => $uuid ?? (string) Str::uuid(),
+                'ip_address' => $request->header('CF-Connecting-IP') ?? $request->ip(),
+                'city' => $request->header('CF-IPCity') ?? 'Unknown',
+                'country' => $request->header('CF-IPCountry') ?? 'Unknown',
+                'os' => str_replace('"', '', $request->header('Sec-CH-UA-Platform') ?? 'Unknown'),
+                'browser' => $request->header('Sec-CH-UA') ?? $request->userAgent(),
+            ]);
 
-            return $visitor;
+            Cookie::queue('visitor', $visitor->uuid, 60 * 24 * 365);
         }
 
-        $visitor = Visitor::create([
-            'uuid' => $uuid ?? (string) Str::uuid(),
-            'ip_address' => $request->header('CF-Connecting-IP') ?? $request->ip(),
-            'city' => $request->header('CF-IPCity') ?? 'Unknown',
-            'country' => $request->header('CF-IPCountry') ?? 'Unknown',
-            'os' => str_replace('"', '', $request->header('Sec-CH-UA-Platform') ?? 'Unknown'),
-            'browser' => $request->header('Sec-CH-UA') ?? $request->userAgent(),
-        ]);
-
-        Cookie::queue('visitor', $visitor->uuid, 60 * 24 * 365);
+        $request->attributes->set('_resolved_visitor', $visitor);
 
         return $visitor;
     }

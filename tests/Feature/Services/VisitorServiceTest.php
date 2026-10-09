@@ -65,4 +65,14 @@ describe('resolve', function () {
             ->and($visitor->os)->toBe('Linux')
             ->and($visitor->browser)->toBe('Chromium');
     });
+
+    it('resolves a single visitor when called more than once for the same request', function () {
+        $request = Request::create('/', 'GET');
+
+        $first = $this->service->resolve($request);
+        $second = $this->service->resolve($request);
+
+        expect($second->id)->toBe($first->id)
+            ->and(Visitor::count())->toBe(1);
+    });
 });

@@ -12,7 +12,7 @@ use Livewire\Component;
 
 class Chat extends Component
 {
-    public Visitor $visitor;
+    public ?Visitor $visitor = null;
 
     public ?string $message = null;
 
@@ -27,10 +27,16 @@ class Chat extends Component
 
     public function mount(): void
     {
-        $this->visitor = $this->resolveVisitor();
+        $uuid = request()->cookie('visitor');
 
-        $this->refreshMessages();
-        $this->refreshHasMoreMessages();
+        $this->visitor = $uuid
+            ? Visitor::where('uuid', $uuid)->first()
+            : null;
+
+        if ($this->visitor !== null) {
+            $this->refreshMessages();
+            $this->refreshHasMoreMessages();
+        }
     }
 
     public function render(): View
@@ -60,6 +66,7 @@ class Chat extends Component
             ]);
         }
 
+        $this->dispatch('log-activity', 'chat-message-submitted');
         $this->dispatch('chat-scroll', force: true);
     }
 
@@ -67,7 +74,7 @@ class Chat extends Component
     {
         $message = $payload['message'] ?? null;
 
-        if (! is_array($message)) {
+        if (! is_array($message) || $this->visitor === null) {
             return;
         }
 
@@ -88,7 +95,7 @@ class Chat extends Component
     {
         $oldestId = $this->messages[0]['id'] ?? null;
 
-        if ($oldestId === null) {
+        if ($oldestId === null || $this->visitor === null) {
             return;
         }
 
@@ -126,6 +133,12 @@ class Chat extends Component
 
     private function refreshMessages(): void
     {
+        if ($this->visitor === null) {
+            $this->messages = [];
+
+            return;
+        }
+
         $this->messages = $this->visitor->messages()
             ->orderByDesc('id')
             ->limit(50)
@@ -140,7 +153,8 @@ class Chat extends Component
     {
         $oldestId = $this->messages[0]['id'] ?? null;
 
-        $this->hasMoreMessages = $oldestId !== null
+        $this->hasMoreMessages = $this->visitor !== null
+            && $oldestId !== null
             && $this->visitor->messages()->where('id', '<', $oldestId)->exists();
     }
 
@@ -165,6 +179,10 @@ class Chat extends Component
 
     public function getListeners(): array
     {
+        if ($this->visitor === null) {
+            return [];
+        }
+
         return [
             "echo:visitor.{$this->visitor->uuid},.message.sent" => 'receiveMessage',
         ];
