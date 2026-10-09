@@ -22,3 +22,5 @@ vendor
 npm-debug.log
 yarn-error.log
 docker-compose.yml
+docker-compose.prod.yml
+.env.production.example
