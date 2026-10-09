@@ -2,6 +2,10 @@ name: tests
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - dev
+      - main
 
 permissions:
   contents: read
