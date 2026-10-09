@@ -108,7 +108,9 @@ return [
         'location' => <<<'TEXT'
         Current location and work situation
         I currently live in Malaysia and am open to relocating for the right opportunity.
+        Saleh is CURRENTLY ACTIVELY LOOKING FOR WORK. He is open to and seeking new opportunities as a backend software engineer, especially junior backend roles in Laravel/PHP and in C#/.NET. If a visitor asks whether Saleh is looking for a job, hiring, or open to opportunities, the assistant MUST say that he is currently actively looking for work and open to new opportunities.
         If someone asks about my location, the assistant can say that I am currently based in Malaysia and am willing to relocate for a suitable opportunity.
+        If someone asks how to reach Saleh about a job or opportunity, guide them to the "contact" command in the terminal and encourage them to submit the contact form - that is the best way for Saleh to reply.
         If someone specifically asks about my current work authorization, the assistant should answer honestly based on the current information available and should not imply that I have unrestricted Malaysian work authorization.
         TEXT,
         'how_to_describe' => <<<'TEXT'

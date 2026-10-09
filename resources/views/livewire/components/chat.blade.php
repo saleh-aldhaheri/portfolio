@@ -3,6 +3,9 @@
     x-data="{
         open: false,
         loadingEarlier: false,
+        subscribedChannel: null,
+        waitingReply: false,
+        unsubscribeFallback: null,
         scrollToEnd(force = false) {
             this.$nextTick(() => {
                 if (! this.open) return;
@@ -11,6 +14,45 @@
                 const gap = el.scrollHeight - el.scrollTop - el.clientHeight;
                 if (force || gap < 90) el.scrollTop = el.scrollHeight;
             });
+        },
+        subscribeToChannel(uuid) {
+            if (! uuid || this.subscribedChannel === uuid || ! window.Echo) return;
+            this.subscribedChannel = uuid;
+            window.Echo.channel('visitor.' + uuid).listen('.message.sent', (event) => {
+                this.$wire.receiveMessage({ message: event.message });
+            });
+        },
+        onReceived(id) {
+            this.waitingReply = false;
+            clearTimeout(this.unsubscribeFallback);
+            this.$nextTick(() => this.typeMessage(id));
+        },
+        startPendingPoll(attempt = 1) {
+            clearTimeout(this.unsubscribeFallback);
+            if (! this.waitingReply || attempt > 30) return;
+            this.unsubscribeFallback = setTimeout(async () => {
+                await this.$wire.receivePendingReply();
+                this.startPendingPoll(attempt + 1);
+            }, 2000);
+        },
+        typeMessage(id) {
+            const el = document.querySelector('[wire\\:key=&quot;message-' + id + '&quot;] p');
+            if (! el || el.dataset.typed) return;
+            const full = el.textContent;
+            el.dataset.typed = '1';
+            el.textContent = '';
+            let i = 0;
+            const step = () => {
+                i += Math.max(1, Math.ceil(full.length / 40));
+                el.textContent = full.slice(0, i);
+                if (i < full.length) {
+                    setTimeout(step, 15);
+                } else {
+                    el.textContent = full;
+                    this.scrollToEnd(true);
+                }
+            };
+            step();
         },
         scrollCheck() {
             if (! this.open || this.loadingEarlier || this.$wire.hasMoreMessages === false) return;
@@ -28,6 +70,8 @@
         }
     }"
     @keydown.escape.window="open = false"
+    @visitor-ready.window="subscribeToChannel($event.detail.uuid)"
+    @chat-received.window="onReceived($event.detail.id)"
 >
 
     <!-- Click-away overlay: closes the chat when clicking outside the box -->
@@ -147,16 +191,17 @@
             @endforelse
 
             {{-- Typing indicator while the assistant reply is on its way --}}
-            <div class="flex gap-2 justify-start" wire:loading wire:target="sendMessage" x-intersect="scrollToEnd()">
+            <div class="flex gap-2 justify-start" x-show="waitingReply" x-cloak x-intersect="scrollToEnd()">
                 <span class="shrink-0 select-none text-primary">&gt;</span>
                 <span class="rounded-lg border border-primary/30 bg-primary/5 px-3 py-2 text-primary animate-pulse">...</span>
             </div>
         </div>
 
-        <form class="flex items-center gap-2 px-4 py-3 border-t border-primary/30 shrink-0" wire:submit.prevent="sendMessage()">
+        <form class="flex items-center gap-2 px-4 py-3 border-t border-primary/30 shrink-0" wire:submit.prevent="sendMessage()" @submit="if ($refs.message.value.trim() !== '') { waitingReply = true; startPendingPoll(); }">
             <span class="text-blue-500 select-none">$</span>
             <input
                 wire:model="message"
+                x-ref="message"
                 type="text"
                 autocomplete="off"
                 placeholder="type a message"
