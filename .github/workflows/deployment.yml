@@ -30,7 +30,9 @@ jobs:
               run: |
                   docker build \
                     --build-arg VITE_APP_NAME=Portfolio \
-                    --build-arg VITE_REVERB_SCHEME=http \
+                    --build-arg VITE_REVERB_SCHEME=https \
+                    --build-arg VITE_REVERB_HOST=saleh-ahamed.pro \
+                    --build-arg VITE_REVERB_PORT=443 \
                     --build-arg VITE_REVERB_APP_KEY=${{ secrets.PROD_VITE_REVERB_APP_KEY }} \
                     -t ${{ secrets.PROD_DOCKER_USERNAME }}/portfolio:production \
                     -t ${{ secrets.PROD_DOCKER_USERNAME }}/portfolio:${{ steps.sha.outputs.short }} \

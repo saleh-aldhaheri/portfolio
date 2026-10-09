@@ -2,6 +2,7 @@ name: portfolio
 
 # Production compose — lives on the server at /var/www/portfolio/docker-compose.yml.
 # The pipeline builds and pushes the image to Docker Hub, then runs `pull && down && up -d` here.
+# TLS termination + certbot live in the `nginx` and `certbot` services (certs in ./certbot/conf).
 
 x-app: &app
   image: salehaldhaheri1010/portfolio:production
@@ -26,8 +27,6 @@ services:
 
   app:
     <<: *app
-    ports:
-      - "80:80"
     depends_on:
       migrate:
         condition: service_completed_successfully
@@ -102,6 +101,34 @@ services:
       timeout: 5s
       retries: 10
     restart: unless-stopped
+    networks:
+      - portfolio
+
+  nginx:
+    image: nginx:alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    env_file:
+      - .env
+    environment:
+      - NGINX_HOST=${NGINX_HOST:-localhost}
+    volumes:
+      - ./nginx.conf:/etc/nginx/templates/default.conf.template
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    depends_on:
+      app:
+        condition: service_started
+    networks:
+      - portfolio
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
     networks:
       - portfolio
 
