@@ -17,7 +17,7 @@
 
 <{{ $as }}
     {{ $attributes->merge([
-        'class' => "inline-block overflow-hidden whitespace-nowrap max-w-max font-mono {$borderClass}"
+        'class' => "terminal-typing inline-block overflow-hidden whitespace-nowrap max-w-max font-mono {$borderClass}"
     ]) }}
     style="animation: typing {{ $duration }} steps({{ $steps }}, end) {{ $delay }} {{ $iteration }}, blink 0.75s step-end infinite; width: 0;"
 >

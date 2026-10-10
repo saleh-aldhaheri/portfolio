@@ -198,3 +198,12 @@
     --animate-terminal-typing: typing 2.5s steps(30, end) forwards;
     --animate-terminal-blink: terminal-blink 0.8s step-end infinite;
 }
+
+@media (max-width: 639px) {
+    .terminal-typing {
+        animation: none !important;
+        width: auto !important;
+        white-space: normal !important;
+        max-width: 100% !important;
+    }
+}
