@@ -16,7 +16,6 @@
                 <input id="command" type="text"
                        autofocus
                        class="bg-transparent flex-1 min-w-0 text-sm outline-none caret-primary"
-                       @keyup="Alpine.store('audio').click()"
                        @keyup.enter="$wire.runCommand(); $el.value = ''"
                        @keydown.arrow-up.prevent="$wire.historyUp().then(() => { $el.value = $wire.input; })"
                        @keydown.arrow-down.prevent="$wire.historyDown().then(() => { $el.value = $wire.input; })"
