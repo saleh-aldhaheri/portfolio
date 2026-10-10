@@ -1,22 +1,22 @@
 <nav class="bg-base p-4 border-b " x-data="{ open: false }">
      <div class="container relative mx-auto flex flex-col md:flex-row justify-between md:items-center gap-4 transition-colors duration-200">
-        <div class="flex items-center justify-between">
-            <h1 class="text-sm md:text-main tracking-tight flex items-center gap-2">
+        <div class="flex flex-wrap items-center justify-between gap-x-2 gap-y-1">
+            <h1 class="text-sm md:text-main tracking-tight flex items-center gap-2 min-w-0">
                 <a href={{config('app.url')}}>
-                    <div class="flex items-center gap-2  px-4 py-3 text-sm">
+                    <div class="flex items-center gap-1.5 sm:gap-2 px-1.5 sm:px-4 py-2 sm:py-3 text-sm">
                         <span class="size-2.5 rounded-full bg-error"></span>
                         <span class="size-2.5 rounded-full bg-warning"></span>
                         <span class="size-2.5 rounded-full bg-primary"></span>
-                        <span class="text-primary text-lg font-bold">saleh-ahmed.dev</span>
+                        <span class="text-primary text-base sm:text-lg font-bold whitespace-nowrap">saleh-ahmed.dev</span>
                     </div>
                 </a>
             </h1>
 
-            <div class="flex items-center flex-row max-[400px]:flex-col gap-1 md:hidden">
+            <div class="flex items-center flex-row max-[400px]:flex-col gap-1 md:hidden shrink-0">
                 <a href="{{ asset('resume/Saleh_Ahmed_Resume.pdf') }}"
                    target="_blank"
                    aria-label="download resume as pdf"
-                   class="text-primary hover:bg-primary/10 px-2 py-0.5 rounded transition-colors"
+                   class="text-primary hover:bg-primary/10 px-2 py-0.5 rounded transition-colors whitespace-nowrap"
                    x-on:click="$store.audio.click(); Livewire.dispatch('log-activity', 'open-resume')"
                 >
                     [ resume ]
@@ -24,7 +24,7 @@
 
                 <button x-on:click="open = !open; $store.audio.click()"
                         type="button"
-                        class="text-muted hover:text-main p-1 focus:outline-none"
+                        class="text-muted hover:text-main p-1 focus:outline-none whitespace-nowrap"
                         aria-label="Toggle terminal menu">
                     <span x-show="!open" >[+ menu]</span>
                     <span x-show="open" x-cloak class="text-warning">[- close]</span>
