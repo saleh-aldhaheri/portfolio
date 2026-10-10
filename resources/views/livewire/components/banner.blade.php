@@ -13,7 +13,7 @@
             name="software"
         />
     </div>
-    <div  x-on:click="Alpine.store('jump').click()" wire:click="setInput('help')" class="mt-2 z-50 text-warning animate-pulse cursor-pointer transition-transform duration-200 ease-in-out hover:-translate-y-2.5">
+    <div wire:click="setInput('help')" class="mt-2 z-50 text-warning animate-pulse cursor-pointer transition-transform duration-200 ease-in-out hover:-translate-y-2.5">
         <x-ascii-art-builder
             :speed="10"
             :delay="2000"
