@@ -6,7 +6,14 @@
 
         <title>{{ $title ?? config('app.name') }}</title>
 
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-X2X7MWLP22"></script>
+
         <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-X2X7MWLP22');
+
             window.setTheme = (theme) => {
                 const root = document.documentElement;
                 root.className = '';
@@ -20,6 +27,7 @@
             };
             window.setTheme(localStorage.getItem('theme'));
         </script>
+
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         @livewireStyles
@@ -36,6 +44,7 @@
 
         @livewireScripts
         <script>
+
            document.addEventListener('alpine:init', (e) => {
                //AI Generated
                Alpine.data('starfield', () => ({
