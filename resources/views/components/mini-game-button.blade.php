@@ -26,6 +26,6 @@
             </button>
         </div>
 
-        <livewire:mini-game />
+        <livewire:components.mini-game />
     </div>
 </div>
