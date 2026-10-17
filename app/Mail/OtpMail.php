@@ -13,7 +13,10 @@ class OtpMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public function __construct(public readonly string $code) {}
+    public function __construct(
+        public readonly string $code,
+        public readonly string $purpose = 'contact',
+    ) {}
 
     /**
      * Get the message envelope.

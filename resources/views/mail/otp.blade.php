@@ -7,7 +7,11 @@
     <body>
         <p>Hello,</p>
 
-        <p>Use the following code to verify your email for the contact form:</p>
+        @if ($purpose === 'admin-email-verification')
+            <p>Use the following code to verify your admin account email address:</p>
+        @else
+            <p>Use the following code to verify your email for the contact form:</p>
+        @endif
 
         <p style="font-size: 28px; font-weight: bold; letter-spacing: 4px;">{{ $code }}</p>
 
