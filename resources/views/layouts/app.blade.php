@@ -40,6 +40,7 @@
             {{ $slot }}
         </main>
         <x-footer/>
+        <x-mini-game-button />
         <x-toaster-hub />
 
         @livewireScripts
