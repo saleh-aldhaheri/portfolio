@@ -5,6 +5,7 @@ use App\Filament\Auth\Pages\Register;
 use App\Mail\OtpMail;
 use App\Models\User;
 use App\Services\EmailVerificationCodeService;
+use Filament\Auth\Pages\PasswordReset\RequestPasswordReset;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Livewire;
@@ -187,7 +188,7 @@ test('password reset request page is accessible', function () {
 });
 
 test('password reset for unknown email returns neutral response without revealing user existence', function () {
-    $response = Livewire::test(\Filament\Auth\Pages\PasswordReset\RequestPasswordReset::class)
+    $response = Livewire::test(RequestPasswordReset::class)
         ->fillForm(['email' => 'nonexistent@example.com'])
         ->call('request');
 
