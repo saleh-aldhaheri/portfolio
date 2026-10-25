@@ -37,9 +37,9 @@ jobs:
 
     steps:
       - name: DeepSeek Code Review
-        uses: hustcer/deepseek-review@v1.21
+        uses: hustcer/deepseek-review@v1
         with:
-          model: "deepseek-ai/DeepSeek-R1"
-          base-url: "https://api.siliconflow.cn/v1"
+          model: "deepseek-reasoner"
+          base-url: "https://api.deepseek.com"
           chat-token: ${{ secrets.DEEPSEEK_TOKEN }}
           allowed-associations: "OWNER,MEMBER,COLLABORATOR"
