@@ -1,30 +1,45 @@
 name: Code Review
+
 on:
   pull_request_target:
-    branches: 
-      - dev
     types:
       - opened
       - reopened
       - synchronize
+
   issue_comment:
     types:
       - created
 
 permissions:
   pull-requests: write
+  contents: read
+  issues: write
 
 jobs:
   setup-deepseek-review:
+    name: DeepSeek Code Review
     timeout-minutes: 30
     runs-on: ubuntu-latest
-    name: Code Review
+
+    if: >-
+      github.event_name == 'pull_request_target' ||
+      (
+        github.event_name == 'issue_comment' &&
+        github.event.issue.pull_request &&
+        contains(github.event.comment.body, '@deepseek') &&
+        (
+          github.event.comment.author_association == 'OWNER' ||
+          github.event.comment.author_association == 'MEMBER' ||
+          github.event.comment.author_association == 'COLLABORATOR'
+        )
+      )
+
     steps:
       - name: DeepSeek Code Review
         uses: hustcer/deepseek-review@v1
         with:
           model: "deepseek-ai/DeepSeek-R1"
           base-url: "https://api.siliconflow.cn/v1"
-          watch-mention: "@deepseek"
           chat-token: ${{ secrets.DEEPSEEK_TOKEN }}
           allowed-associations: "OWNER,MEMBER,COLLABORATOR"
