@@ -13,8 +13,6 @@ on:
 
 permissions:
   pull-requests: write
-  contents: read
-  issues: write
 
 jobs:
   setup-deepseek-review:
@@ -22,24 +20,12 @@ jobs:
     timeout-minutes: 30
     runs-on: ubuntu-latest
 
-    if: >-
-      github.event_name == 'pull_request_target' ||
-      (
-        github.event_name == 'issue_comment' &&
-        github.event.issue.pull_request &&
-        contains(github.event.comment.body, '@deepseek') &&
-        (
-          github.event.comment.author_association == 'OWNER' ||
-          github.event.comment.author_association == 'MEMBER' ||
-          github.event.comment.author_association == 'COLLABORATOR'
-        )
-      )
-
     steps:
       - name: DeepSeek Code Review
         uses: hustcer/deepseek-review@v1
         with:
           model: "deepseek-reasoner"
           base-url: "https://api.deepseek.com"
+          watch-mention: "@deepseek"
           chat-token: ${{ secrets.DEEPSEEK_TOKEN }}
           allowed-associations: "OWNER,MEMBER,COLLABORATOR"
