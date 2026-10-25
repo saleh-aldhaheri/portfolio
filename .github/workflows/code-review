@@ -1,0 +1,30 @@
+name: Code Review
+on:
+  pull_request_target:
+    branches: 
+      - dev # Added dash here
+    types:
+      - opened
+      - reopened
+      - synchronize
+  issue_comment:
+    types:
+      - created
+
+permissions:
+  pull-requests: write
+
+jobs:
+  setup-deepseek-review:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    name: Code Review
+    steps:
+      - name: DeepSeek Code Review
+        uses: hustcer/deepseek-review@v1
+        with:
+          model: "deepseek-ai/DeepSeek-R1"
+          base-url: "https://api.siliconflow.cn/v1"
+          watch-mention: "@deepseek"
+          chat-token: ${{ secrets.DEEPSEEK_TOKEN }}
+          allowed-associations: "OWNER,MEMBER,COLLABORATOR"
